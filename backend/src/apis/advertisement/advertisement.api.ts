@@ -1,4 +1,4 @@
-5import {
+import {
   AdvertisementDto,
   SaveAdvertisementDto,
 } from "../../dtos/advertisement.dto";

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WEBSITE_CONFIG_IMAGE_FOLDER = exports.CATEGORIES_IMAGE_FOLDER = exports.RAOVAT_IMAGE_FOLDER = exports.ADVERTISEMENT_IMAGE_FOLDER = exports.ADVERTISEMENT_POSITION_VALUES = exports.ACTIVE_STATUS_VALUES = exports.PAGE_SIZE_MAX = void 0;
+exports.PAGE_SIZE_MAX = 30;
+exports.ACTIVE_STATUS_VALUES = ["active", "inactive"];
+exports.ADVERTISEMENT_POSITION_VALUES = ["top", "left", "right"];
+exports.ADVERTISEMENT_IMAGE_FOLDER = "/advertisements";
+exports.RAOVAT_IMAGE_FOLDER = "/rao-vats";
+exports.CATEGORIES_IMAGE_FOLDER = "/categories";
+exports.WEBSITE_CONFIG_IMAGE_FOLDER = "/website-config";
