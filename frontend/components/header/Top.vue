@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import moment from "moment";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "~/stores/user";
 
 const userStore = useUserStore()
@@ -7,6 +8,12 @@ const userStore = useUserStore()
 const interval = ref()
 const timeFormat = 'hh:mm:ss A'
 const time = ref(moment().format(timeFormat))
+const isOpenActionDropdown = ref(false);
+
+const logout = () => {
+  useUserStore().logout()
+}
+
 onMounted(() => {
   interval.value = setInterval(() => {
     // Concise way to format time according to system locale.
@@ -34,7 +41,17 @@ onMounted(() => {
           <div class="">
             <ul class="news-info-list text-right" style="align-items: center">
               <li>
-                <a class="sign-in" href="/sign-in">{{ userStore.user?.name || 'Đăng Nhập' }}</a>
+                <a v-if="!userStore.user?.name" class="sign-in" href="/sign-in">{{ userStore.user?.name || 'Đăng Nhập' }}</a>
+                <div v-else class="position-relative text-left">
+                  <span class="cursor-pointer" @click="isOpenActionDropdown = !isOpenActionDropdown"> {{ userStore.user?.name }}</span>
+                  <div v-if="isOpenActionDropdown" class="user-action-dropdown rounded">
+                      <a href="/user-info">Thông Tin Cá Nhân</a>
+                      <a href="/change-password">Đổi Mật Khẩu</a>
+                      <a href="/rao-vat/tao-bai-viet">Tạo Bài Viết</a>
+                      <hr class="m-0">
+                      <div class="logout" @click="logout()">Đăng Xuất</div>
+                  </div>
+                </div>
               </li>
               <li style="margin-right: -8px">
                 <div class="d-flex align-items-center" style="margin-top:2px">
@@ -91,6 +108,36 @@ onMounted(() => {
           color: white;
         }
       }
+    }
+  }
+  .user-action-dropdown {
+    background-color: white;
+    position: absolute;
+    top: 105%;
+    width: 160px;
+    z-index: 100;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+    & > div, a {
+        display: block;
+        padding: 4px 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
+        font-weight: 400;
+
+        &.logout {
+            color: #e53935;
+        }
+
+        &:hover {
+            background-color: #e53935;
+            color: #fff;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        right: 0rem;
     }
   }
 }

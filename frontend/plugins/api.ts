@@ -1,10 +1,11 @@
 import { defineNuxtPlugin } from "nuxt/app";
 import { AdminConsoleApi } from "~/api/admin-console.api";
 import { AuthApi } from "~/api/auth.api";
-
+import { UserApi } from "~/api/user.api";
 interface ApiInstances {
   auth: AuthApi;
   adminConsole: AdminConsoleApi,
+  user: UserApi
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -14,6 +15,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const apis: ApiInstances = {
     auth: new AuthApi(fetchOptions),
     adminConsole: new AdminConsoleApi(fetchOptions),
+    user: new UserApi(fetchOptions)
   };
 
   return {

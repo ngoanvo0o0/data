@@ -21,4 +21,7 @@ export class AuthApi extends HttpClient {
     return await this.call("POST", `${this.baseUrl}/sign-in-with-token`, input);
   }
 
+  async revoke() {
+    await this.call("POST", `${this.baseUrl}/revoke`);
+  }
 }

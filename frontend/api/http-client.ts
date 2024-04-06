@@ -1,4 +1,5 @@
 import { FetchOptions } from "ofetch";
+import { useUserStore } from "~/stores/user";
 export class HttpClient {
   constructor(private options: FetchOptions) {}
 
@@ -15,7 +16,7 @@ export class HttpClient {
       ...extras,
     };
     if (process.client) {
-      const token = localStorage.getItem("token");
+      const { token } = useUserStore();
       if (token) {
         if (!option.headers) {
           option.headers = {} as Record<string, string>;

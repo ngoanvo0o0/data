@@ -137,8 +137,6 @@ const handleSeparateMenu = (menus: MenuDto[]) => {
         const index = menuGroupOne.value.findIndex((c: any) => c.id == item.id)
         if (index === -1) {
           if (categoriesNeedToMergeGroupTree.includes(item.slug)) {
-            console.log('categoriesNeedToMergeGroupTree', item.slug);
-
             menuGroupThree.value.push(item)
           } else {
             menuGroupOne.value.push(item)
