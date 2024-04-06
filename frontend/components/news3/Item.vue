@@ -1,99 +1,61 @@
 <script setup lang="ts">
-import {type NewsDto} from "~/models/news.model";
+import { useRouter } from "nuxt/app";
+import {NewsDto} from "~/models/news.model";
 
-interface Props {
+const $router = useRouter()
+const props = defineProps<{
   news: NewsDto,
-  isMain?: boolean
-  isRaoVat?: boolean,
-  isShowImage?: boolean
-}
+  isRaoVat?: boolean
+}>()
 
-withDefaults(defineProps<Props>(), {
-  isMain: false,
-  isShowImage: true,
-})
+const redirectPage = () => {
+  const slug = props.news.slug
+  if (!props.isRaoVat) {
+    $router.push({ path: `bai-viet/${slug}` })
+    return
+  }
+  $router.push({ path: `rao-vat/${slug}` })
+}
 </script>
 
 <template>
-  <div class="news-item">
-    <div v-if="isShowImage" class="overflow-hidden" :class="isMain ? 'main-height-img' : 'sub-height-img'">
-      <NuxtLink :to="`${!isRaoVat ? '/bai-viet' : '/rao-vat'}/${news.slug}`" class="img-scale-animate mb-4 position-relative cursor-pointer">
-        <nuxt-img :src="news.imageUrl || ''" :alt="''" format="webp" class="img-fluid d-block" />
+  <div class="media media-none--lg mb-30">
+    <div class="position-relative width-40">
+      <NuxtLink :to="`${!isRaoVat ? '/bai-viet' : '/rao-vat'}/${news.slug}`" class="img-opacity-hover">
+        <nuxt-img  :src="news.imageUrl || ' '" format="webp" height="500" alt="news" class="img-fluid" style="height: 170px; object-fit: cover; width: 100%;" />
       </NuxtLink>
     </div>
-    <div class="news-info">
-      <NuxtLink :to="`${!isRaoVat ? '/bai-viet' : '/rao-vat'}/${news.slug}`" style="color: #101010;">
-        <SharedNewsTitle :title="news.title" :isMain="isMain"/>
-      </NuxtLink>
-      <div class="time">
-        <div class="post-date-light">
-          <SharedNewsAuthor
+    <div class="media-body p-mb-none-child media-margin30 d-flex flex-column">
+      <div class="post-date-dark">
+        <SharedNewsAuthor
             :author="news.author"
             :publishDate="news.publishDate"
-          />
-        </div>
+        />
       </div>
-      <div v-if="isMain">
-        <SharedShortNewsDescription :description="news.description"/>
+      <h3 class="title-semibold-dark size-lg mb-15">
+        <NuxtLink :to="`${!isRaoVat ? '/bai-viet' : '/rao-vat'}/${news.slug}`">
+          {{news.title}}
+        </NuxtLink>
+      </h3>
+      <p v-if="!isRaoVat" class="elipsis-3-lines">{{news.description}}
+      </p>
+      <div v-else class="mt-auto">
+        <button class="btn-contact">
+          <NuxtLink :to="`${!isRaoVat ? '/bai-viet' : '/rao-vat'}/${news.slug}`" style="color: white;">Chi tiết</NuxtLink>
+        </button>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-
-.news-info {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.news-item:hover .img-scale-animate img {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1)
-}
-
-.news-info .time .post-date-light {
-  margin-bottom: 15px;
-}
-
-
-.news-info .time .post-date-light ul li {
-  color: #5c5c5c;
-  font-size: 600;
+<style scoped>
+.btn-contact {
+  color: white;
   font-size: 12px;
-  margin: 0;
-}
-
-.main-height-img img {
-  height: 250px;
-  width: 100%;
-}
-
-.sub-height-img img {
-  height: 118px;
-  width: 100%;
-}
-
-@media screen and (max-width:768px) {
-  .main-height-img img {
-    height: auto;
-  }
-  .sub-height-img img {
-    height: 200px;
-  }
-  .news-info .time .post-date-light {
-    margin-bottom: 30px;
-  }
-}
-
-@media screen and (max-width:576px) {
-  .main-height-img img,
-  .sub-height-img img {
-    height: auto;
-    max-height: 340px;
-  }
+  background-color: #4F46E5;
+  border: none;
+  padding: 2px 10px;
+  width: 130px;
+  height: 35px;
 }
 </style>

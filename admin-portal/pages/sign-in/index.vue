@@ -37,7 +37,7 @@
 			const { $api } = useNuxtApp();
 			const { token, role } = await $api.auth.signIn(credentials);
 			localStorage.setItem('token', token);
-			if(role) {
+			if(role && role.id && role.name) {
 				localStorage.setItem('role', JSON.stringify(role));
 			}
 

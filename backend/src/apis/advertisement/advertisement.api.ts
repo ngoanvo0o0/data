@@ -21,6 +21,7 @@ import { extname, join } from "path";
 import { removeFile, saveFile } from "../../services/file.service";
 import { ADVERTISEMENT_IMAGE_FOLDER } from "../../constants/app.constant";
 import { AuthenticationInfo } from "../../dtos/authentication.dto";
+import { Permissions } from "../../constants/permission.constant";
 
 @Route("advertisements")
 export class AdvertisementController {
@@ -37,7 +38,7 @@ export class AdvertisementController {
   }
 
   @Post()
-  @Security("")
+  @Security("", [Permissions.ADS_ADD])
   public async createAdvertisement(
     @Request() request: Express.Request,
     @UploadedFile("image") image: Express.Multer.File
@@ -56,7 +57,7 @@ export class AdvertisementController {
   }
 
   @Put("{id}")
-  @Security("")
+  @Security("", [Permissions.ADS_EDIT])
   public async updateAdvertisement(
     @Path() id: string,
     @Request() request: Express.Request,
@@ -88,8 +89,8 @@ export class AdvertisementController {
     return advertisement;
   }
 
+  @Security("", [Permissions.ADS_DELETE])
   @Delete("{id}")
-  @Security("")
   public async deleteAdvertisement(
     @Path() id: string,
     @Request() request: Express.Request

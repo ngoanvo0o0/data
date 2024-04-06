@@ -1,23 +1,18 @@
 <script setup lang="ts">
-import type { NewsDto, PagedNewsItemDto, PagedRaoVatItemDto } from "~/models/news.model";
-import {useFetch, useRoute, useRuntimeConfig} from "#app";
-import {type PagedList} from "~/models/pagination.model";
-
-const props = defineProps<{
-  pagesize?: number
-}>()
+import { PagedList } from "models/pagination.model";
+import { useFetch, useRuntimeConfig } from "nuxt/app";
+import { PagedNewsItemDto } from "~/models/news.model";
 
 const $config = useRuntimeConfig();
-const apiURL = $config.public.apiURL as string
+const apiURL = $config.public.apiURL
 const getMostViewNewsList = async () => {
   const { data: data } = await useFetch<PagedList<PagedNewsItemDto>>("/api/news", {
     baseURL: apiURL,
     params: {
       page: 1,
-      size: 10,
+      size: 8,
     }
   });
-  
   return data;
 }
 const mostViewNewsList = await getMostViewNewsList();
@@ -26,13 +21,12 @@ const mostViewNewsList = await getMostViewNewsList();
 
 <template>
   <div class="sidebar-box">
-    <SharedNewsHeader :header="'Bài viết tiêu biểu'"/>  
-    <div class="add-item5-lg" style="padding: 0 10px;">
-      <RaoVatItem
-        v-for="news in mostViewNewsList?.items?.slice(0, pagesize || 5)"
-        :key="news.id"
-        :news="news"
-        :isRaoVat="false"
+    <SharedHeaderSidebarItem header-title="Bài Viết Tiêu Biểu" />
+    <div class="row">
+      <MostViewItem
+          class="col-6"
+          v-for="news in mostViewNewsList?.items"
+          :news="news"
       />
     </div>
   </div>

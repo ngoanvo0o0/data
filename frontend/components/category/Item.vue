@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type TagsDto } from "~/models/category.model";
+import { TagsDto } from "~/models/category.model";
 
 const props = defineProps<{
   tag: TagsDto

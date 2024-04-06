@@ -3,8 +3,7 @@
   "extends": "./.nuxt/tsconfig.json",
   "exclude": ["node_modules", ".nuxt", "dist"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,

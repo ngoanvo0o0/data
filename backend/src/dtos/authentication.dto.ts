@@ -60,7 +60,7 @@ export interface SignUpRequest {
 export interface AccountCredentialsDto {
     email: string;
     password: string;
-    isRememberMe: boolean;
+    isRememberMe?: boolean;
 }
 
 export interface RefreshTokenRequest {

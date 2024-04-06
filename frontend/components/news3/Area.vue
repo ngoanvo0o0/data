@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type NewsDto } from "~/models/news.model";
+import { NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
   label?: string,
@@ -8,16 +8,15 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="">
-    <SharedNewsHeader :header="label || newses[0].categoryName"/>
+  <div>
     <div class="row">
-      <div class="col-md-6 col-12">
-        <News3Item :news="newses[0]" :isMain="true"/>
-      </div>
-      <div class="col-md-6 col-12 w-100">
+      <div class="col-lg-12 col-md-12">
+        <News3Header :header="label || newses[0].categoryName"/>
         <div class="row">
-          <div v-for="news in newses.slice(1, 5)" :key="news.id" class="col-12 col-sm-6">
-            <News3Item :news="news"/>
+          <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12" v-for="news in newses">
+            <News3Item
+                :news = "news"
+            />
           </div>
         </div>
       </div>
@@ -25,10 +24,6 @@ const props = defineProps<{
   </div>
 </template>
 
-<style >
-/* .news-3-item-section {
-  display: flex;
-  gap: 30px;
-} */
+<style scoped>
 
 </style>

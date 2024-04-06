@@ -9,7 +9,7 @@ import {
 import { SelectOptionResponse } from "~/models/role.model";
 import { GetNewsResponse, NewsRequest, NewsResponse } from "~/models/news.model";
 import { GetRaoVatResponse, RaoVatRequest } from "~/models/raovat.model";
-import { GetMenuResponse, MenuRequest, MenuResponse } from "~/models/menu.model";
+import {GetContactResponse, GetMenuResponse, MenuRequest, MenuResponse} from "~/models/menu.model";
 import { ConfigRequest, ConfigResponse } from "~/models/config.model";
 import { WebsiteRequest, WebsiteResponse } from "~/models/website.model";
 import { HistoryDto } from "~/models/history.model";
@@ -179,5 +179,9 @@ export class AdminConsoleApi extends HttpClient {
 
   async getNewsDetailsOfMembers(userId: string, month: string): Promise<GetNewsDetailsOfMembersResponse> {
     return await this.call("GET", `api/admin-console/reports/news-details-by/${userId}/months/${month}`)
+  }
+
+  async getContacts(): Promise<GetContactResponse> {
+    return await this.call("GET", "api/admin-console/contact-histories")
   }
 }

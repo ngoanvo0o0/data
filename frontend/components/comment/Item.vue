@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type CommentDto} from "~/models/comment.model";
+import { CommentDto} from "~/models/comment.model";
 import moment from "moment";
 
 const props = defineProps<{

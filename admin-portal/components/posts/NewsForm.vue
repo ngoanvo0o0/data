@@ -327,7 +327,6 @@ const onSelectedFile = async (files: File[]) => {
     }
   }
 }
-console.table(onSelectedFile)
 
 const copyClipboard = ($event: string) => {
   $toast.success('Sao chép thành công!')

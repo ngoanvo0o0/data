@@ -1,291 +1,233 @@
-<template>
-  <header>
-    <div class="header">
-      <div id="header-layout2" class="header-style5">
-        <HeaderTop />
-        <div class="" id="sticker">
-          <div class="element-container main-menu-area">
-            <div class="bg-body" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.08)">
-              <div class="row no-gutters d-flex align-items-center">
-                <div class="menu-left position-static min-height-none" style="width: 95%">
-                  <div class="ne-main-menu">
-                    <nav id="dropdown">
-                      <ul>
-                        <li>
-                          <router-link to="/">Trang chủ</router-link>
-                        </li>
-                        <li v-if="menuGroupOneSorted.length > 0">
-                          <router-link :to="`/${menuGroupOneSorted[0].slug}`" active-class="active" class="menu-item">
-                            <span style="margin-right: 5px;">{{ menuGroupOneSorted[0].name }}</span>
-                            <span v-if="menuGroupOneSorted.length" style="margin-left: 2px;">
-                              <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                            </span>
-                          </router-link>
-                          <ul class="ne-dropdown-menu" v-if="menuGroupOneSorted.length" style="max-height: 300px;overflow: hidden auto">
-                            <li v-for="child in menuGroupOneSorted">
-                              <router-link :to="`/${child.slug}`" active-class="active">{{
-                                child.name }}</router-link>
-                            </li>
-                          </ul>
-                        </li>
-                        <li v-for="item in menuGroupTwo">
-                          <router-link :to="`/${item.slug}`" active-class="active" class="menu-item">
-                            <span style="margin-right: 5px;">{{ item.name }}</span>
-                            <span v-if="item.childCategories?.length">
-                              <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                            </span>
-                          </router-link>
-                          <ul class="ne-dropdown-menu" v-if="item.childCategories?.length" style="max-height: 300px;overflow: hidden auto">
-                            <li v-for="child in item.childCategories">
-                              <router-link :to="`/${child.slug}`" active-class="active">{{
-                                child.name }}</router-link>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <router-link to="/rao-vat" active-class="active">
-                            <span style="margin-right: 5px;">Rao vặt</span>
-                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                          </router-link>
-                          <ul class="ne-dropdown-menu row" v-if="raoVatCategories?.length" style="width: 500px;right: 0;max-height: 300px;overflow: hidden auto">
-                            <li v-for="category in raoVatCategories" class="col-4">
-                              <a :href="`/rao-vat?categorySlug=${category.slug}`">{{
-                                category.name }}</a>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
+  <template>
+    <header>
+            <div id="header-layout2" class="header-style5">
+                <div class="header-top-bar">
+                    <div class="top-bar-top box-layout">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul class="news-info-list">
+                                        <li>
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>{{moment().format('MM-DD-YYYY')}}</li>
+                                        <li>
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>{{time}}</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-6">
+                                    <ul class="news-info-list text-right">
+                                        <li>
+                                            <a v-if="!user?.name" class="sign-in" href="/sign-in">{{ user?.name ||'Đăng Nhập'}}</a>
+                                            <div v-else class="position-relative text-left">
+                                                <span class="cursor-pointer" @click="isOpenActionDropdown = !isOpenActionDropdown"> {{ user?.name }}</span>
+                                                <div v-if="isOpenActionDropdown" class="user-action-dropdown rounded">
+                                                    <a href="/user-info">Thông Tin Cá Nhân</a>
+                                                    <a href="/change-password">Đổi Mật Khẩu</a>
+                                                    <a href="/rao-vat/tao-bai-viet">Tạo Bài Viết</a>
+                                                    <hr class="m-0">
+                                                    <div class="logout" @click="logout()">Đăng Xuất</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li style="margin-right: -8px;">
+                                            <div class="d-flex align-items-center">
+                                                <div id="google_translate_element"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="bg-body box-layout">
+                            <div class="top-bar-bottom pt-20 pb-20">
+                                <div class="row d-flex align-items-center ">
+                                    <div class="col-lg-4 d-none d-lg-block">
+                                        <div class="logo-area">
+                                            <a href="/" class="img-fluid">
+                                                    <nuxt-img  style="height: 70px;" src="/img/logotapnews.png" alt="Người Việt Plus logo" />
+                                                    <figure class="m-0 logo-figure">Tiếng Nói Người Việt Toàn Cầu</figure>
+                                                </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-12">
+                                        <div class="">
+                                            <nuxt-img quality="80" format="webp"  style="width: 100%;" src="/img/banner/header-banner.png" alt="ad" class="img-fluid" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="menu-right text-right position-static min-height-none" style="width: 4%">
-                  <div class="header-action-item">
-                    <ul class="search-icon">
-                      <li>
-                        <form id="top-search-form" class="header-search-light">
-                          <input v-model="keyword" type="text" id="search-input" class="search-input"
-                            placeholder="Tìm kiếm...." required @keyup.enter="searchKeyword()">
-                          <button class="search-button">
-                            <i class="fa fa-search" aria-hidden="true" style=""></i>
-                          </button>
-                        </form>
-                      </li>
-                    </ul>
-                  </div>
+                <div class="main-menu-area border" id="sticker">
+                    <div class="container">
+                        <div class="bg-body box-layout">
+                            <div class="">
+                                <div class="row no-gutters d-flex align-items-center">
+                                    <div class="col-lg-11 col-md-11 d-none d-lg-block position-static min-height-none">
+                                        <div class="ne-main-menu">
+                                            <nav id="dropdown">
+                                                <ul>
+                                                    <li>
+                                                        <router-link to="/" active-class="active">Trang chủ</router-link>
+                                                    </li>
+                                                    <li v-for="item in menus?.data" >
+                                                        <router-link :to="`/${item.slug}`" active-class="active">{{ item.name }}</router-link>
+                                                        <ul class="ne-dropdown-menu" v-if="item.childCategories?.length">
+                                                            <li v-for="child in item.childCategories">
+                                                                <router-link :to="`/${child.slug}`" active-class="active">{{ child.name }}</router-link>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <router-link to="/rao-vat" active-class="active">Rao vặt</router-link>
+                                                        <ul class="ne-dropdown-menu" v-if="raoVatCategories?.length">
+                                                            <li v-for="category in raoVatCategories">
+                                                                <a :href="getHrefRaoVat(category.slug)">{{ category.name }}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-4 text-right position-static min-height-none">
+                                        <div class="header-action-item on-mobile-fixed">
+                                            <ul>
+                                                <li>
+                                                    <form id="top-search-form" class="header-search-light">
+                                                        <input v-model="keyword" type="text" id="search-input" class="search-input" placeholder="Tìm kiếm...." required style="display: none;" @keyup.enter="searchKeyword()">
+                                                        <button class="search-button">
+                                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                            </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+        </header>
 </template>
 <script setup lang="ts">
+import moment from "moment";
 import { useFetch, useRouter, useRuntimeConfig } from "nuxt/app";
 import { useUserStore } from "~/stores/user";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { ref } from "vue";
-import type { CategoryDto } from "~/models/category.model";
-import type { GetMenuResponse, MenuDto } from "~/models/menu.model";
+import { CategoryDto } from "~/models/category.model";
+import { GetMenuResponse } from "~/models/menu.model";
+import { storeToRefs } from "pinia";
 
 const $config = useRuntimeConfig();
 const $router = useRouter()
 const keyword = ref()
-const menuGroupOne = ref<MenuDto[]>([])
-const menuGroupTwo = ref<MenuDto[]>([])
-const categoriesNeedToMerge = ['suc-khoe', 'doi-song', 'du-lich-1', 'am-thuc']
+const {user} = storeToRefs(useUserStore())
+const isOpenActionDropdown = ref(false);
 
-const menuGroupOneSorted = computed(() => {
-  const doiSongIndex = menuGroupOne.value.findIndex(item => item.slug == 'doi-song')
-  const updateArray = [...menuGroupOne.value]
-  
-  if (doiSongIndex !== -1) {
-    menuGroupOne.value.splice(doiSongIndex, 1)
-    const doiSongItem = updateArray[doiSongIndex]
-    
-    return [doiSongItem, ...menuGroupOne.value]
-  }
-
-  return menuGroupOne.value
-})
-
-const checkIsHomePage = computed(() => $router.currentRoute.value.path.slice(1) === '')
-
-const handleSeparateMenu = (menus: MenuDto[]) => {
-  menus.forEach((item) => {
-    if (item.slug) {
-      if (categoriesNeedToMerge.includes(item.slug)) {
-      const index = menuGroupOne.value.findIndex((c: any) => c.id == item.id)
-      if (index === -1) {
-        menuGroupOne.value.push(item)
-      }
-    } else {
-      menuGroupTwo.value.push(item)
-    }
-    }
-  })
+const logout = () => {
+    useUserStore().logout()
 }
 
 const searchKeyword = async () => {
-  await $router.push({ path: `/tim-kiem/${keyword.value}` })
-  keyword.value = ''
+    await $router.push({ path: `/tim-kiem/${keyword.value}` })
+    keyword.value = ''
 }
-
 const getMenus = async () => {
-  const { data } = await useFetch<GetMenuResponse>("/api/admin-console/menus", {
-    baseURL: $config.public.apiURL as string,
-  });
-
-  data.value?.data && handleSeparateMenu(data.value?.data)
-
-  return data
-}
-
-const getRaoVatCategories = async () => {
-  return await useFetch<CategoryDto[]>("/api/categories", {
-    baseURL: $config.public.apiURL as string,
-    query: {
-      type: 'raovat'
-    }
+  return await useFetch<GetMenuResponse>("/api/admin-console/menus", {
+    baseURL: $config.public.apiURL,
   }).data;
 }
 
-const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCategories()]);
+const getRaoVatCategories = async () => {
+  const { data } = await useFetch<CategoryDto[]>("/api/categories", {
+    baseURL: $config.public.apiURL,
+    query: {
+        type: 'raovat'
+    }
+  })
 
+  const createNewPath = {
+    name: 'Tạo bài viết',
+    slug: 'tao-bai-viet'
+  }
+
+  return [...data?.value, createNewPath]
+}
+
+const getHrefRaoVat = (slug: string) => {
+    if (slug !== 'tao-bai-viet') {
+        return `/rao-vat?categorySlug=${slug}`
+    }
+
+    return '/rao-vat/tao-bai-viet'
+}
+
+const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCategories()]);
+const interval = ref()
+const timeFormat = 'hh:mm:ss A'
+const time = ref(moment().format(timeFormat))
+onMounted(() => {
+  interval.value = setInterval(() => {
+    // Concise way to format time according to system locale.
+    // In my case this returns "3:48:00 am"
+    time.value = moment().format(timeFormat)
+  }, 1000)
+})
 
 </script>
 
-<style lang="scss">
-
-.wrapper #sticker {
-  background-color: #d72924;
-}
-.wrapper.not-home-page #sticker {
-  background-color: rgb(240, 241, 244);;
+<style lang="scss" scoped>
+.top-bar-top {
+    background-color: #fde9e1;
 }
 
-.not-home-page .header {
-  .sign-up,
-  a:has(+ .ne-dropdown-menu .active),
-  .active {
-    color: black !important;
-    background-color: #d72924
-  }
-
-  a:has(+ .ne-dropdown-menu .active):hover,
-  .active:hover {
-    color: black !important;
-    background-color: #d72924
-  }
-
-  .main-menu-area .bg-body {
-    background-color: white
-  }
-
-  .main-menu-area .ne-main-menu nav ul li a:hover {
-    color: white;
-    background-color: #d72924;
-  }
+.sign-in,
+.sign-up,
+a:has(+ .ne-dropdown-menu .active),
+.active {
+    color: #e53935 !important;
 }
 
-.header {
-  .header-menu-fixed {
-    max-width: 1140px;
-    margin: 0 auto;
-  }
+a:has(+ .ne-dropdown-menu .active):hover,
+.active:hover {
+    color: #fff !important;
+}
 
-  /* .main-menu-area {
-    padding-right: 15px;
-    padding-left: 15px;
-  } */
-
-  .main-menu-area .bg-body {
-    background-color: #d72924
-  }
-
-  .main-menu-area .ne-main-menu nav ul li:hover a {
-    color: #d72924;
+.user-action-dropdown {
     background-color: white;
-  }
+    position: absolute;
+    top: 105%;
+    width: 160px;
+    z-index: 100;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 
-  .main-menu-area .ne-main-menu nav ul li a:hover {
-    color: #d72924;
-    background-color: black;
-  }
+    & > div, a {
+        display: block;
+        padding: 4px 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
 
-  .main-menu-area .ne-main-menu nav ul li a {
-    color: black;
-    display: block;
-    font-family: Roboto, sans-serif !important;
-    font-size: 14px;
-    font-weight: 800;
-    text-transform: uppercase;
-    -webkit-transition: all .3s ease-out;
-    -moz-transition: all .3s ease-out;
-    -ms-transition: all .3s ease-out;
-    -o-transition: all .3s ease-out;
-    transition: all .3s ease-out
-  }
+        &.logout {
+            color: #e53935;
+        }
 
-  .main-menu-area .ne-main-menu nav ul li .ne-dropdown-menu a {
-    color: black;
-  }
-}
+        &:hover {
+            background-color: #e53935;
+            color: #fff;
+        }
+    }
 
-.header-action-item input {
-  display: none;
-  top: 50%;
-  transform: translateY(-50%)
-}
-.header-action-item ul li .fa-search {
-  font-size: 25px !important;
-  color: white !important;
-}
-.not-home-page .header-action-item .search-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background-color: #d72924 !important;
-}
-.not-home-page .header-action-item ul li .fa-search {
-  font-size: 25px !important;
-  color: white !important;
-}
-.header .menu {
-  display: block
-}
-@media screen and (max-width:992.9px) {
-  .header .menu-left {
-    display: none;
-  }
-  /* .header .menu-right {
-    display: none;
-  } */
-  .header .top-bar-bottom {
-    display: none;
-  }
-  /* .header .on-mobile-fixed ul {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center
-  } */
-
-  .header-action-item ul li .fa-search {
-  font-size: 25px !important;
-  color: #232323 !important;
-}
+    @media screen and (max-width: 768px) {
+        right: 0rem;
+    }
 }
 
-@media screen and (max-width:576px) {
-  .header-action-item .search-icon {
-    background-color: transparent !important;
-  }
-}
 </style>

@@ -1,8 +1,8 @@
 import moment from "moment";
-import { type PagedList } from "~/models/pagination.model";
+import { PagedList } from "~/models/pagination.model";
 
 export const formatNewsDate = (date: string | Date) => {
-    return moment(date).format('DD-MM-YYYY')
+    return moment(date).format('MM-DD-YYYY')
 }
 
 export const replaceAllHtmlTag = (string?: string) => {

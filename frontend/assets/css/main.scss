@@ -9,15 +9,10 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  color: #d72924;
-  font-weight: 600;
+  color: #000;
   margin: 0 !important;
   padding-top: 2px;
   text-transform: capitalize;
-}
-
-.goog-te-combo option {
-  color: #000;
 }
 
 .goog-te-gadget>*:nth-child(n + 2) {
@@ -228,4 +223,8 @@
 
 .outline-0 {
   outline-width: 0;
+}
+
+.logo-figure {
+  color: #831916;
 }

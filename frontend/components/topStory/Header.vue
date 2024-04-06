@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {NewsDto} from "~/models/news.model";
+import {NewsDto} from "~/models/news.model";
 
 const props = defineProps<{
   newses: NewsDto[]
@@ -24,14 +24,6 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-.bg-body {
-  background-color: transparent;
-}
-
-.feeding-text-dark2 .ticker {
-  background-color: transparent;
-}
-
 #sample {
   list-style-type: none !important;
   padding-left: 0;

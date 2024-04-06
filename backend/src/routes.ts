@@ -583,6 +583,19 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CommentDto": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "content": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "userId": {"dataType":"string","required":true},
+            "avatar": {"dataType":"string","required":true},
+            "createdAt": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"datetime"}],"required":true},
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "AdvertisementPosition": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["top"]},{"dataType":"enum","enums":["left"]},{"dataType":"enum","enums":["right"]}],"validators":{}},
@@ -652,7 +665,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "email": {"dataType":"string","required":true},
             "password": {"dataType":"string","required":true},
-            "isRememberMe": {"dataType":"boolean","required":true},
+            "isRememberMe": {"dataType":"boolean"},
         },
         "additionalProperties": true,
     },
@@ -807,6 +820,15 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ChangePasswordRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "currentPassword": {"dataType":"string","required":true},
+            "newPassword": {"dataType":"string","required":true},
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -818,7 +840,7 @@ export function RegisterRoutes(app: Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.get('/api/admin-console/users',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_USERS_VIEW"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.getUsers)),
 
@@ -870,7 +892,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/users',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_USERS_ENABLE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertUser)),
 
@@ -897,7 +919,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/admin-console/users/:userId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_USERS_DISABLE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.deleteUser)),
 
@@ -924,7 +946,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/admin-console/team',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_MEMBER_VIEW"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.getTeam)),
 
@@ -949,7 +971,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/admin-console/team/:userId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_MEMBER_VIEW"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.getTeamById)),
 
@@ -976,7 +998,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/team',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_MEMBER_ADD"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertTeam)),
 
@@ -1003,7 +1025,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/admin-console/team/:userId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_MEMBER_DELETE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.deleteTeam)),
 
@@ -1054,6 +1076,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/admin-console/select/categories/:type',
+            authenticateMiddleware([{"":[]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.getSelectCategories)),
 
@@ -1153,7 +1176,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/categories',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_CATEGORY_ADD"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertCategory)),
 
@@ -1180,7 +1203,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/admin-console/categories/:categoryId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_CATEGORY_DELETE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.deleteCategory)),
 
@@ -1256,7 +1279,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/news',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_POST_ADD"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertNews)),
 
@@ -1283,7 +1306,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/admin-console/news/:newsId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_POST_DELETE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.deleteNews)),
 
@@ -1310,7 +1333,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/admin-console/news/:newsId/change-status',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["MANAGE_POST_EDIT"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.changeStatusNews)),
 
@@ -1387,7 +1410,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/rao-vat',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["RAOVAT_ADD"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertRaoVat)),
 
@@ -1414,7 +1437,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/admin-console/rao-vat/:raoVatId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["RAOVAT_DELETE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.deleteRaoVat)),
 
@@ -1514,7 +1537,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/menus',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["CONFIG_MENU_ADD"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertMenu)),
 
@@ -1541,7 +1564,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/admin-console/menus/:menuId',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["CONFIG_MENU_DELETE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.deleteMenu)),
 
@@ -1592,7 +1615,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/configs',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["CONFIG_SEO_EDIT"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertConfig)),
 
@@ -1643,7 +1666,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/admin-console/website',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["CONFIG_SEO_EDIT"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.upsertWebsite)),
 
@@ -1670,7 +1693,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/admin-console/histories',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["HISTORY_ACTIVITY_TEAM"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
             ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.getHistories)),
 
@@ -1842,6 +1865,30 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/admin-console/contact-histories',
+            ...(fetchMiddlewares<RequestHandler>(AdminConsoleController)),
+            ...(fetchMiddlewares<RequestHandler>(AdminConsoleController.prototype.contactHistories)),
+
+            function AdminConsoleController_contactHistories(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AdminConsoleController();
+
+
+              const promise = controller.contactHistories.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/advertisements',
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController)),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController.prototype.getAdvertisements)),
@@ -1893,7 +1940,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/advertisements',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["ADS_ADD"]}]),
             upload.single('image'),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController)),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController.prototype.createAdvertisement)),
@@ -1921,7 +1968,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/advertisements/:id',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["ADS_EDIT"]}]),
             upload.single('image'),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController)),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController.prototype.updateAdvertisement)),
@@ -1950,7 +1997,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/advertisements/:id',
-            authenticateMiddleware([{"":[]}]),
+            authenticateMiddleware([{"":["ADS_DELETE"]}]),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController)),
             ...(fetchMiddlewares<RequestHandler>(AdvertisementController.prototype.deleteAdvertisement)),
 
@@ -2450,6 +2497,60 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getLinks.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/users/change-password',
+            authenticateMiddleware([{"":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(WebsiteApi)),
+            ...(fetchMiddlewares<RequestHandler>(WebsiteApi.prototype.changePassword)),
+
+            function WebsiteApi_changePassword(request: any, response: any, next: any) {
+            const args = {
+                    changePasswordRequest: {"in":"body","name":"changePasswordRequest","required":true,"ref":"ChangePasswordRequest"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new WebsiteApi();
+
+
+              const promise = controller.changePassword.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/api/users/me',
+            authenticateMiddleware([{"":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(WebsiteApi)),
+            ...(fetchMiddlewares<RequestHandler>(WebsiteApi.prototype.updateProfile)),
+
+            function WebsiteApi_updateProfile(request: any, response: any, next: any) {
+            const args = {
+                    updateProfileRequest: {"in":"body","name":"updateProfileRequest","required":true,"dataType":"any"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new WebsiteApi();
+
+
+              const promise = controller.updateProfile.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

@@ -25,3 +25,13 @@ export interface MenuRequest {
   name?: string
   categoryId?: string
 }
+
+export interface CommentDto {
+  name: string
+  content: string
+  email: string
+}
+
+export interface GetContactResponse {
+  data: CommentDto[]
+}

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import moment from 'moment';
 import { useFetch, useSeoMeta, useRoute, useRuntimeConfig } from 'nuxt/app';
-import type { CommentDto, PagedCommentDto } from '~/models/comment.model';
-import type { RaoVatDto } from "~/models/news.model";
-import type { PagedList } from '~/models/pagination.model';
+import {CommentDto, PagedCommentDto} from '~/models/comment.model';
+import { RaoVatDto } from "~/models/news.model";
+import { PagedList } from '~/models/pagination.model';
 import { replaceAllHtmlTag } from '~/utils/functions';
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useModal } from 'vue-final-modal'
 import ImagePreview from '~/components/ImagePreview.vue';
 import { defineArticle, defineWebPage, defineWebSite, useSchemaOrg } from '@vueuse/schema-org';
@@ -15,14 +14,14 @@ const $config = useRuntimeConfig();
 const $route = useRoute();
 const slug = $route.params.slug;
 const { data: data } = await useFetch<RaoVatDto>(`/api/rao-vat/${slug}`, {
-  baseURL: $config.public.apiURL as string,
+  baseURL: $config.public.apiURL,
 });
 
 const comments: CommentDto[] = ref([])
 
 const loadComments = async () => {
-  const { items: items } = await $fetch<PagedList<PagedCommentDto>>("/api/comments", {
-    baseURL: $config.public.apiURL as string,
+  const {items: items} = await $fetch<PagedList<PagedCommentDto>>("/api/comments", {
+    baseURL: $config.public.apiURL,
     params: {
       page: 1,
       size: 999,
@@ -32,7 +31,7 @@ const loadComments = async () => {
 
   comments.value = items
 }
-onMounted(() => {
+onMounted( () => {
   loadComments()
 })
 
@@ -44,7 +43,7 @@ useSeoMeta({
   ogDescription: data.value?.description || replaceAllHtmlTag(data.value?.content?.slice(0, 300)) || '',
   ogImage: data.value?.imageUrl || ''
 }, {
-  mode: 'all'
+    mode: 'all'
 })
 
 useSchemaOrg([
@@ -57,7 +56,7 @@ useSchemaOrg([
   })
 ])
 
-const openPreviewImage = (src: string) => {
+const openPreviewImage = (src: string ) => {
   console.log('click')
   const { open } = useModal({
     component: ImagePreview,
@@ -68,141 +67,94 @@ const openPreviewImage = (src: string) => {
   open();
 }
 
-const publishedDate = computed(() => {
-  const dateFormat = 'MM-DD-YYYY';
-  if (!data?.publishDate) return moment(new Date()).format(dateFormat);
-
-  return moment(data.publishDate).format(dateFormat);
-})
-
-const breadcrumbs = computed(() => {
-  let _breadcrumbs = []
-  _breadcrumbs.push({ url: '/', title: 'Home' });
-  _breadcrumbs.push({ url: '/', title: 'Rao Vặt' });
-  return _breadcrumbs
-})
-
 </script>
 
 <template>
-  <section class="news-detail section-wrapper" style="background-color: #f0f1f4;">
-    <div class="element-container">
-      <section class="main-image" style="margin-bottom: 30px">
-        <div class="position-relative" style="height: 100%;">
-          <nuxt-img :src="data?.imageUrl || ' '" format="webp" :alt="data?.title" class=""
-            style="width: auto;height: 100%; object-fit: contain;" />
-        </div>
-      </section>
-      <div class="row">
-        <div class="col-lg-9 col-md-12" style="background-color: #f0f1f4;">
-          <SharedBreadcrumb :breadcrumbs="breadcrumbs" :category="''" :small="true" />
-          <div class="news-detail-content">
-            <template v-if="data">
-              <div class="news-details-layout1" style="position: relative">
-                <div class="box-category">
-                  <SharedBoxCategory :category="data?.categoryName" :slug="data?.categoryName" />
-                </div>
-                <h1 class="title-semibold-dark size-c30 normal-case">{{ data?.title }}</h1>
-                <ul class="post-info-dark mb-30" style="display: flex; align-items: center">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-calendar" aria-hidden="true"></i>{{ publishedDate }}</a>
-                  </li>
-                  <!-- <li style="display: flex; align-items: center">
-                    <i class="fa fa-eye" style="color:red"></i>
-                    <p style="margin: 0; margin-left: 10px;color: red">{{ data.view }}</p>
-                  </li> -->
-                </ul>
-                <div class="render-html">
-                  <article v-html="data?.content"></article>
-                </div>
-                <div class="mt-30">
-                  <h2 class="title-semibold-dark size-xl">Hình ảnh</h2>
-                  <div class="slider-wrapper">
-                    <div class="slider">
-                      <div v-for="item in data?.extraImages" @click="openPreviewImage(item)" class="slider-item">
-                        <img loading="lazy" :alt="data?.title" style="width: 100%; object-fit: cover;" :src="item"
-                          alt="ad" class="img-fluid" />
-                      </div>
+    <div>
+        <section class="bg-body">
+            <div class="container box-layout">
+                <div class="breadcrumbs-content">
+                    <div>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.7071 2.29289C10.3166 1.90237 9.68342 1.90237 9.29289 2.29289L2.29289 9.29289C1.90237 9.68342 1.90237 10.3166 2.29289 10.7071C2.68342 11.0976 3.31658 11.0976 3.70711 10.7071L4 10.4142V17C4 17.5523 4.44772 18 5 18H7C7.55228 18 8 17.5523 8 17V15C8 14.4477 8.44772 14 9 14H11C11.5523 14 12 14.4477 12 15V17C12 17.5523 12.4477 18 13 18H15C15.5523 18 16 17.5523 16 17V10.4142L16.2929 10.7071C16.6834 11.0976 17.3166 11.0976 17.7071 10.7071C18.0976 10.3166 18.0976 9.68342 17.7071 9.29289L10.7071 2.29289Z" fill="#9CA3AF"/>
+                        </svg>
                     </div>
-                  </div>
+
+                    <div style="margin-bottom: -2.5px;">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.29289 14.7071C6.90237 14.3166 6.90237 13.6834 7.29289 13.2929L10.5858 10L7.29289 6.70711C6.90237 6.31658 6.90237 5.68342 7.29289 5.29289C7.68342 4.90237 8.31658 4.90237 8.70711 5.29289L12.7071 9.29289C13.0976 9.68342 13.0976 10.3166 12.7071 10.7071L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071Z" fill="#9CA3AF"/>
+                      </svg>
+                    </div>
+
+                    <span style="line-height: 1;">Rao vặt</span>
                 </div>
-                <div class="contact-card mt-30">
-                  <h2>Thông tin liên hệ</h2>
-                  <hr>
-                  <p><strong>Tên người liên hệ:</strong> {{ data?.contactName }}</p>
-                  <p v-if="data?.address"><strong>Địa chỉ:</strong> {{ data?.address }}</p>
-                  <p v-if="data?.phoneNumber"><strong>Số điện thoại:</strong> <a :href='`tel:${data?.phoneNumber}`'>{{
-                    data?.phoneNumber }}</a></p>
-                  <p v-if="data?.facebook"><strong>Liên kết Facebook:</strong> <a
-                      :href='`https://www.facebook.com/${data?.facebook}`' target="_blank">fb.com/{{ data?.facebook }}</a>
-                  </p>
-                  <p v-if="data?.email"><strong>Email:</strong> <a :href="`mailto:${data?.email}`" target="_blank">{{
-                    data?.email }}</a></p>
-                  <p v-if="data?.websiteUrl"><strong>Website:</strong> <a :href="data?.websiteUrl" target="_blank">{{
-                    data?.websiteUrl }}</a></p>
+            </div>
+            <div class="container box-layout">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 mb-30">
+                        <div class="news-details-layout1">
+                            <div class="position-relative mb-30">
+                                <nuxt-img  :src="data?.imageUrl || ' '" format="webp" :alt="data?.title" class="img-fluid" />
+                                <div class="topic-box-top-sm">
+                                    <div class="topic-box-sm color-cinnabar mb-20">{{ data?.categoryName }}</div>
+                                </div>
+                            </div>
+                            <h1 class="title-semibold-dark size-c30 normal-case">{{data?.title}}</h1>
+                            <div class="render-html">
+                                <article v-html="data?.content"></article>
+                            </div>
+
+                            <div class="mt-30">
+                              <h2 class="title-semibold-dark size-xl">Hình ảnh</h2>
+                              <div class="slider-wrapper">
+                                <div class="slider">
+                                  <div v-for="item in data?.extraImages"
+                                        @click="openPreviewImage(item)"
+                                        class="slider-item">
+                                      <img loading="lazy"
+                                          :alt="data?.title"
+                                          style="width: 100%; object-fit: cover;"
+                                          :src="item" alt="ad"
+                                          class="img-fluid"/>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="contact-card mt-30">
+                              <h2>Thông tin liên hệ</h2>
+                              <hr>
+                              <p><strong>Tên người liên hệ:</strong> {{data?.contactName}}</p>
+                              <p v-if="data?.address"><strong>Địa chỉ:</strong> {{data?.address}}</p>
+                              <p v-if="data?.phoneNumber"><strong>Số điện thoại:</strong> <a :href='`tel:${data?.phoneNumber}`'>{{data?.phoneNumber}}</a></p>
+                              <p v-if="data?.facebook"><strong>Liên kết Facebook:</strong> <a :href='`https://www.facebook.com/${data?.facebook}`' target="_blank">fb.com/{{data?.facebook}}</a></p>
+                              <p v-if="data?.email"><strong>Email:</strong> <a :href="`mailto:${data?.email}`" target="_blank">{{data?.email}}</a></p>
+                              <p v-if="data?.websiteUrl"><strong>Website:</strong> <a :href="data?.websiteUrl" target="_blank">{{data?.websiteUrl}}</a></p>
+                            </div>
+
+                            <CommentArea :comments="comments" v-if="comments?.length" class="mt-30"/>
+                            <CommentForm :rao-vat-id="data?.id" @createCommentSuccess="loadComments" :title="'Bình luận'"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <!-- <SidebarAd /> -->
+                        <SidebarRaoVat class="mb-30"/>
+                        <SidebarMostView class="mb-30"/>
+                        <SidebarAd class="mt-30" />
+                    </div>
                 </div>
-                <CommentArea :comments="comments" v-if="comments?.length" class="mt-30" />
-                <CommentForm :newsId="data?.id" @createCommentSuccess="loadComments" />
-              </div>
-            </template>
-          </div>
-        </div>
-        <div class="search-side col-lg-3 col-md-12">
-          <SidebarRaoVat />
-          <SidebarAd />
-          <SidebarMostView :pagesize="10" />
-        </div>
-      </div>
+            </div>
+        </section>
     </div>
-  </section>
 </template>
 
 <style scoped lang="scss">
-.news-detail .main-image {
-  /* height: 600px; */
-  display: flex;
-  justify-content: center;
-}
-
-.news-detail .main-image img {
-  max-height: 600px;
-}
-
-.news-detail-content {
-  background-color: #fff;
-  padding: 85px 80px 40px
-}
-
-.news-detail-content .box-category {
-  position: absolute;
-  left: 0;
-  top: -40px
-}
-
-@media screen and (max-width:992px) {
-  .search-side {
-    margin-top: 40px;
-  }
-
-  .news-detail-content {
-    padding: 85px 40px 40px;
-  }
-}
-
-@media screen and (max-width:576px) {
-  .news-detail-content {
-    padding: 85px 20px 40px;
-  }
-}
-
 .slider-wrapper {
   border: 1px solid #D1D5DB;
   padding: 12px 16px;
   width: 100%;
   border-radius: 4px;
 }
-
 .slider {
   display: flex;
   gap: 16px;
@@ -226,7 +178,6 @@ const breadcrumbs = computed(() => {
     }
   }
 }
-
 // .slider::-webkit-scrollbar {
 //     display: none;
 // }
@@ -235,12 +186,10 @@ slides::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-
 .slides::-webkit-scrollbar-thumb {
   // background: black;
   border-radius: 10px;
 }
-
 .slides::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -260,7 +209,7 @@ slides::-webkit-scrollbar {
     }
   }
 }
-
+  
 .contact-card {
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -287,16 +236,15 @@ slides::-webkit-scrollbar {
 .contact-card a {
   color: #17a2b8;
 }
-
 .breadcrumbs-content {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+    display: flex; 
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
-.render-html>article ol {
+.render-html > article ol {
   display: block;
   list-style-type: decimal;
   margin-top: 1em;
@@ -306,7 +254,7 @@ slides::-webkit-scrollbar {
   padding-left: 40px;
 }
 
-.render-html>article ul {
+.render-html > article ul {
   display: block;
   list-style-type: disc;
   margin-top: 1em;
@@ -316,37 +264,37 @@ slides::-webkit-scrollbar {
   padding-left: 40px;
 }
 
-.render-html>article li {
+.render-html > article li {
   display: list-item;
 }
 
-.render-html>article ul li {
+.render-html > article ul li {
   list-style-type: none;
 }
 
-.render-html>article ul li::before {
+.render-html > article ul li::before {
   content: "\2022";
   margin-right: 0.5em;
 }
 
-.render-html>article ul li.ql-indent-1::before {
+.render-html > article ul li.ql-indent-1::before {
   content: "\26AC";
   margin-right: 0.5em;
 }
 
-.render-html>article ul li.ql-indent-2::before {
+.render-html > article ul li.ql-indent-2::before {
   content: "◾";
   margin-right: 0.5em;
 }
 
-.render-html>article blockquote {
+.render-html > article blockquote {
   border-left: 4px solid #ccc;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 16px;
 }
 
-.render-html>article pre {
+.render-html > article pre {
   background-color: #23241f;
   color: #f8f8f2;
   overflow: visible;
@@ -359,51 +307,51 @@ slides::-webkit-scrollbar {
   font-size: 14px;
 }
 
-.render-html>article :deep(.ql-indent-1) {
+.render-html > article :deep(.ql-indent-1) {
   padding-left: 3rem;
 }
 
-.render-html>article :deep(.ql-indent-2) {
+.render-html > article :deep(.ql-indent-2) {
   padding-left: calc(2 * 3rem);
 }
 
-.render-html>article :deep(.ql-indent-3) {
+.render-html > article :deep(.ql-indent-3) {
   padding-left: calc(3 * 3rem);
 }
 
-.render-html>article :deep(.ql-indent-4) {
+.render-html > article :deep(.ql-indent-4) {
   padding-left: calc(4 * 3rem);
 }
 
-.render-html>article :deep(.ql-indent-5) {
+.render-html > article :deep(.ql-indent-5) {
   padding-left: calc(5 * 3rem);
 }
 
-.render-html>article :deep(.ql-indent-6) {
+.render-html > article :deep(.ql-indent-6) {
   padding-left: calc(6 * 3rem);
 }
 
-.render-html>article :deep(.ql-indent-7) {
+.render-html > article :deep(.ql-indent-7) {
   padding-left: calc(7 * 3rem);
 }
 
-.render-html>article :deep(.ql-indent-8) {
+.render-html > article :deep(.ql-indent-8) {
   padding-left: calc(8 * 3rem);
 }
 
-.render-html>article :deep(.ql-align-right) {
+.render-html > article :deep(.ql-align-right) {
   text-align: right;
 }
 
-.render-html>article :deep(.ql-align-center) {
+.render-html > article :deep(.ql-align-center) {
   text-align: center;
 }
 
-.render-html>article :deep(.ql-align-justify) {
+.render-html > article :deep(.ql-align-justify) {
   text-align: justify;
 }
 
-.render-html>article h1 {
+.render-html > article h1 {
   font-size: calc(2 * 16px);
   line-height: calc(2 * 16px);
   margin-top: calc(0.67 * 16px);
@@ -411,7 +359,7 @@ slides::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.render-html>article h2 {
+.render-html > article h2 {
   font-size: calc(1.5 * 16px);
   line-height: calc(1.5 * 16px);
   margin-top: calc(0.83 * 16px);
@@ -419,7 +367,7 @@ slides::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.render-html>article h3 {
+.render-html > article h3 {
   font-size: calc(1.17 * 16px);
   line-height: calc(1.17 * 16px);
   margin-top: calc(1 * 16px);
@@ -427,7 +375,7 @@ slides::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.render-html>article h4 {
+.render-html > article h4 {
   font-size: calc(1 * 16px);
   line-height: calc(1 * 16px);
   margin-top: calc(1.33 * 16px);
@@ -435,7 +383,7 @@ slides::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.render-html>article h5 {
+.render-html > article h5 {
   font-size: calc(0.83 * 16px);
   line-height: calc(0.83 * 16px);
   margin-top: calc(1.67 * 16px);
@@ -443,7 +391,7 @@ slides::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.render-html>article h6 {
+.render-html > article h6 {
   font-size: calc(0.67 * 16px);
   line-height: calc(0.67 * 16px);
   margin-top: calc(2.33 * 16px);
@@ -451,7 +399,7 @@ slides::-webkit-scrollbar {
   font-weight: 600;
 }
 
-.render-html>article p {
+.render-html > article p {
   display: block;
   margin-top: 0.75em;
   margin-bottom: 0.75em;
@@ -459,7 +407,7 @@ slides::-webkit-scrollbar {
   margin-right: 0;
 }
 
-.render-html>article hr {
+.render-html > article hr {
   display: block;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -469,20 +417,20 @@ slides::-webkit-scrollbar {
   border-width: 1px;
 }
 
-.render-html>article img {
+.render-html > article img {
   display: inline-block;
 }
 
-.render-html>article strong {
+.render-html > article strong {
   font-weight: bolder !important;
 }
 
-.render-html>article sub {
+.render-html > article sub {
   vertical-align: super;
   font-size: smaller;
 }
 
-.render-html>article a {
+.render-html > article a {
   text-decoration: underline;
   color: #3851e5;
 }

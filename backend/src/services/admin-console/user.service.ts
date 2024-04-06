@@ -1,12 +1,21 @@
-import { UserDto } from "../../dtos/user.dto"
-import { GetUsersByIdResponse, GetUsersResponse, UpsertUserRequest, UpsertUserResponse } from "../../apis/admin-console"
-import { Users } from "../../models/Users"
-import { CustomError } from "../../errorHandler"
-import { Op } from "sequelize"
-import { uuid } from 'uuidv4'
-import {random} from "lodash";
-import { logCreation, logDeletion, logUpdate } from "./histories.service"
-import { HistoryEntityType } from "../../dtos/history.dto"
+import { UserDto } from "../../dtos/user.dto";
+import {
+  ChangePasswordRequest,
+  GetUsersByIdResponse,
+  GetUsersResponse,
+  UpdateUserRequest,
+  UpsertUserRequest,
+  UpsertUserResponse,
+} from "../../apis/admin-console";
+import { Users } from "../../models/Users";
+import { CustomError } from "../../errorHandler";
+import { Op } from "sequelize";
+import { uuid } from "uuidv4";
+import { random } from "lodash";
+import { logCreation, logDeletion, logUpdate } from "./histories.service";
+import { HistoryEntityType } from "../../dtos/history.dto";
+import { comparePasswords, hashSecret } from "../authentication.service";
+import { isValidEmail } from "../../shared/function";
 
 export class AdminConsoleUSerService {
   public async getUsers(): Promise<GetUsersResponse> {
@@ -14,11 +23,11 @@ export class AdminConsoleUSerService {
       where: {
         isDeleted: false,
         roleId: {
-          [Op.eq]: null!
-        }
+          [Op.eq]: null!,
+        },
       },
-      order: [['updated_at', 'DESC']]
-    })
+      order: [["updated_at", "DESC"]],
+    });
 
     const usersMapped = users.map((user) => {
       return {
@@ -30,35 +39,35 @@ export class AdminConsoleUSerService {
         phoneNumber: user.phoneNumber,
         createdAt: user.createdAt,
         facebookId: user.facebookId,
-        googleId: user.googleId
-      } as UserDto
-    })
+        googleId: user.googleId,
+      } as UserDto;
+    });
 
-    return { data: usersMapped }
+    return { data: usersMapped };
   }
 
   public async getUsersById(userId: string): Promise<GetUsersByIdResponse> {
     const userModel = await Users.findOne({
       where: {
         isDeleted: false,
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
     if (!userModel) {
-      throw new CustomError('User not found', 400)
+      throw new CustomError("User not found", 400);
     }
 
-    let userNameUpdated = ''
+    let userNameUpdated = "";
     if (userModel.updatedBy) {
       const findUserUpdated = await Users.findOne({
         where: {
           isDeleted: false,
-          id: userModel.updatedBy
-        }
-      })
+          id: userModel.updatedBy,
+        },
+      });
 
-      userNameUpdated = findUserUpdated?.name ?? ''
+      userNameUpdated = findUserUpdated?.name ?? "";
     }
 
     const user = {
@@ -71,86 +80,138 @@ export class AdminConsoleUSerService {
       createdAt: userModel.createdAt,
       roleId: userModel.roleId,
       userNameUpdated,
-      updatedAt: userModel.updatedAt
-    } as UserDto
+      updatedAt: userModel.updatedAt,
+    } as UserDto;
 
-    return { data: user }
+    return { data: user };
   }
 
-  public async upsertUser(userRequest: UpsertUserRequest, currentUser: string): Promise<UpsertUserResponse> {
-    let userId = userRequest.id
+  public async upsertUser(
+    userRequest: UpsertUserRequest,
+    currentUser: string
+  ): Promise<UpsertUserResponse> {
+    let userId = userRequest.id;
     if (!userId) {
-      userId = uuid()
+      userId = uuid();
     }
     const countEmailExisting = await Users.count({
       where: {
         isDeleted: false,
         email: {
-          [Op.iLike]: userRequest.email
+          [Op.iLike]: userRequest.email,
         },
         id: {
-          [Op.ne]: userId
-        }
-      }
-    })
+          [Op.ne]: userId,
+        },
+      },
+    });
 
     if (countEmailExisting > 0) {
-      throw new CustomError('This email already exists in the system. Please enter another email.', 400)
+      throw new CustomError(
+        "This email already exists in the system. Please enter another email.",
+        400
+      );
     }
 
-    const randomAvatarNum = random(0, 6)
-    const [user] = await Users.upsert({
-      id: userRequest.id,
-      name: userRequest.fullName,
-      email: !userRequest.id ? userRequest.email : undefined,
-      status: userRequest.status,
-      roleId: userRequest.roleId,
-      // phoneNumber: userRequest.phoneNumber,
-      updatedAt: new Date(),
-      createdBy: !userRequest.id ? currentUser : undefined,
-      updatedBy: currentUser,
-      avatar: `/img/authorAvatar/c${randomAvatarNum}.png`,
-      isDeleted: false,
-    }, {
-      returning: true
-    })
+    const randomAvatarNum = random(0, 6);
+    const [user] = await Users.upsert(
+      {
+        id: userRequest.id,
+        name: userRequest.fullName,
+        email: !userRequest.id ? userRequest.email : undefined,
+        status: userRequest.status,
+        roleId: userRequest.roleId,
+        // phoneNumber: userRequest.phoneNumber,
+        updatedAt: new Date(),
+        createdBy: !userRequest.id ? currentUser : undefined,
+        updatedBy: currentUser,
+        avatar: `/img/authorAvatar/c${randomAvatarNum}.png`,
+        isDeleted: false,
+      },
+      {
+        returning: true,
+      }
+    );
 
     if (userRequest.id === user.id) {
-      logUpdate(
-        currentUser,
-        user.id,
-        user.name!,
-        HistoryEntityType.User
-      );
+      logUpdate(currentUser, user.id, user.name!, HistoryEntityType.User);
     } else {
-      logCreation(
-        currentUser,
-        user.id,
-        user.name!,
-        HistoryEntityType.User
-      );
+      logCreation(currentUser, user.id, user.name!, HistoryEntityType.User);
     }
 
     return {
       id: user.id,
       email: user.email,
       name: user.name,
-      phoneNumber: user.phoneNumber
-    }
+      phoneNumber: user.phoneNumber,
+    };
   }
 
   public async deleteUser(userId: string, currentUser: string): Promise<void> {
-    const user = await Users.findByPk(userId)
+    const user = await Users.findByPk(userId);
 
     if (!user) {
-      throw new CustomError('Not found user', 400)
+      throw new CustomError("Not found user", 400);
     }
 
-    user.isDeleted = true
-    user.updatedBy = currentUser
-    user.updatedAt = new Date()
-    user.save()
+    user.isDeleted = true;
+    user.updatedBy = currentUser;
+    user.updatedAt = new Date();
+    user.save();
 
     logDeletion(currentUser, user.id, user.name!, HistoryEntityType.User);
+  }
+
+   public async updateUser(userId: string, request: UpdateUserRequest): Promise<void> {
+    if(!request.name || !request.email) {
+      throw new CustomError("Name and email are required", 400);
+    }
+
+    if(!isValidEmail(request.email)) {
+      throw new CustomError("Invalid email", 400);
+    }
+
+    const foundUser = await Users.findOne({
+      where: {
+        email: request.email,
+      },
+    });
+    if (foundUser && foundUser.id !== userId) {
+      throw new CustomError("User already exists", 400);
+    }
+
+    const user = await Users.findByPk(userId);
+    if (!user) {
+      throw new CustomError("Not found user", 400);
+    }
+
+    user.name = request.name;
+    user.email = request.email;
+    user.updatedBy = userId;
+    user.updatedAt = new Date();
+    user.save();
+
+    logUpdate(userId, user.id, user.name!, HistoryEntityType.User);
+  }
+
+  public async changePassword(userId: string, request: ChangePasswordRequest) {
+    const user = await Users.findByPk(userId);
+    if (!user) {
+      throw new CustomError("Invalid Credentials", 400);
+    }
+
+    const isPasswordValid = await comparePasswords(
+      request.currentPassword,
+      user.password!
+    );
+    if (!isPasswordValid) {
+      throw new CustomError("Invalid Credentials", 400);
+    }
+    user.password = await hashSecret(request.newPassword);
+    user.updatedAt = new Date();
+    user.updatedBy = userId;
+    user.save();
+
+    logUpdate(user.id, user.id, user.name!, HistoryEntityType.User);
   }
 }

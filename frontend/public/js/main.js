@@ -42,7 +42,7 @@
             }, 1e3)
         })) : t.text("No more item to display"), !1
     }), e("nav#dropdown").meanmenu({
-        siteLogo: "<div class='mobile-menu-nav-back'><a href='/' class='logo-mobile'><img style='height: 48px;' src='/img/logotapnews.png'/></a></div>"
+        siteLogo: "<div class='mobile-menu-nav-back flex-column'><a href='/' class='logo-mobile'><img style='height: 48px;' src='/img/logotapnews.png'/></a> <figure class='m-0 logo-figure'>Tiếng Nói Người Việt Toàn Cầu</figure></div>"
     }), (new WOW).init(), e.scrollUp({
         scrollText: '<i class="fa fa-angle-double-up"></i>',
         easingType: "linear",

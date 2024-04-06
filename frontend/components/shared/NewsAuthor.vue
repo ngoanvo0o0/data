@@ -7,22 +7,19 @@ const props = defineProps<{
 </script>
 
 <template>
-  <ul class="new-author">
+  <ul>
+    <!-- <li v-if="author">
+      <span>by</span>
+      <a href="#">{{author}}</a>
+    </li> -->
     <li v-if="publishDate">
-      <span>
-        <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;"></i>
-      </span>
-      <span>{{formatNewsDate(publishDate)}}</span>
+        <span>
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+        </span>{{formatNewsDate(publishDate)}}
     </li>
   </ul>
 </template>
 
 <style scoped>
-.new-author li {
-  display: flex;
-  align-items: center;
-}
-.new-author i {
-  font-size: 18px;
-}
+
 </style>

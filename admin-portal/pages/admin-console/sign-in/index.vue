@@ -39,11 +39,14 @@
 			const jsonToken = JSON.parse(atob(token.split('.')[1]))
 			localStorage.setItem('exp', jsonToken?.exp);
 			if(role && userInfo) {
+				if(!(role.id && role.name))
+					throw new Error('Invalid credentials');
+
 				localStorage.setItem('role', JSON.stringify(role));
 				localStorage.setItem('userInfo', JSON.stringify(userInfo));
 				navigateTo('/admin-console/dashboard');
 			} else {
-				navigateTo('/');
+				throw new Error('Invalid credentials');
 			}
 		} catch (_) {
 			const { $toast } = useNuxtApp();

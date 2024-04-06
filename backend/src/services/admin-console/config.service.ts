@@ -2,6 +2,8 @@ import { Configs } from "../../models/Configs"
 import { ConfigRequest, ConfigResponse } from "../../apis/admin-console"
 import { logHistory } from "./histories.service"
 import { HistoryEntityType } from "../../dtos/history.dto"
+import {Comments} from "../../models/init-models";
+import {CommentDto} from "../../dtos/comment.dot";
 
 export class AdminConsoleConfigService {
   public async getConfigByKey(key: string): Promise<ConfigResponse> {
@@ -42,5 +44,25 @@ export class AdminConsoleConfigService {
         value: config.value
       }
     }
+  }
+
+  public async contactHistories(): Promise<CommentDto[]> {
+    const contacts = await Comments.findAll({
+      where: {
+        isDeleted: false,
+        newsId: null,
+        raoVatId: null
+      }
+    })
+
+    const result = contacts.map((contact) => {
+      return {
+        name: contact.anonymousName,
+        content: contact.content,
+        email: contact.anonymousEmail
+      } as CommentDto
+    })
+
+    return result
   }
 }

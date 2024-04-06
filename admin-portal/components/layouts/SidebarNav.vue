@@ -186,7 +186,8 @@ import {
   PhotoIcon,
   AdjustmentsHorizontalIcon,
   ListBulletIcon,
-  ClipboardDocumentListIcon
+  ClipboardDocumentListIcon,
+  BellIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import { navigateTo } from 'nuxt/app';
@@ -249,6 +250,7 @@ const navigation = [
       }
     ]
   },
+  { name: 'Liên hệ', href: '/admin-console/contact', icon: BellIcon },
   { name: 'Báo cáo', href: '/admin-console/reports', icon: ChartPieIcon },
   { name: 'Lịch sử hoạt động thành viên', href: '/admin-console/histories', icon: ListBulletIcon },
 ]

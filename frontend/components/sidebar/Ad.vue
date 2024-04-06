@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {useFetch, useRoute, useRuntimeConfig} from "nuxt/app";
 
-const props = defineProps<{
+  const props = defineProps<{
   url?: string,
   imageUrl?: string,
-  pagesize?: number
 }>()
 
 const $config = useRuntimeConfig();
@@ -19,9 +18,8 @@ const adsRight = ads.value?.filter(e => e.position === 'right')
 
 <template>
   <div class="sidebar-box">
-    <!-- <SharedHeaderSidebarItem header-title="Quảng Cáo" /> -->
-    <News3Header :header="'Quảng Cáo'"/>
-    <div class="ne-banner-layout1 text-center mb-30" v-for="(ad, index) in adsRight.slice(0, pagesize || 2)" :key="index">
+    <SharedHeaderSidebarItem header-title="Quảng Cáo" />
+    <div class="ne-banner-layout1 text-center mb-30" v-for="ad in adsRight">
       <NuxtLink :to="ad.url || ''" class="img-opacity-hover">
         <nuxt-img  :src="ad.imageUrl || ' '" alt="ad" class="img-fluid img-thumbnail" />
       </NuxtLink>
@@ -40,7 +38,5 @@ const adsRight = ads.value?.filter(e => e.position === 'right')
 </template>
 
 <style scoped>
-.not-home-page .sidebar-box {
-  background-color: #f0f1f4
-}
+
 </style>

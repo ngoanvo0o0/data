@@ -1,181 +1,199 @@
-import { UserDto } from "../../dtos/user.dto"
-import { CategoryDto, CategoryStatusEnum, CategoryTypeEnum, CategoryTypeShowEnum } from "../../dtos/category.dto"
-import { NewsDto } from "../../dtos/news.dto"
-import { SelectOption } from "../../dtos/common"
-import { RaoVatDto } from "../../dtos/raovat.dto"
-import { MenuDto } from "../../dtos/menu.dto"
-import {PaginationQuery} from "../../dtos/pagination.dto";
-import { ConfigDto } from "../../dtos/config.dto"
-import { WebsiteDto } from "../../dtos/website.dto"
-import { DashboardDto } from "../../dtos/dashboard.dto"
-import { NewsDetailsOfMembersDto, NewsOfMemberDto, ToTalNewsOfMonthDto } from "../../dtos/reports.dto"
+import { UserDto } from "../../dtos/user.dto";
+import {
+  CategoryDto,
+  CategoryStatusEnum,
+  CategoryTypeEnum,
+  CategoryTypeShowEnum,
+} from "../../dtos/category.dto";
+import { NewsDto } from "../../dtos/news.dto";
+import { SelectOption } from "../../dtos/common";
+import { RaoVatDto } from "../../dtos/raovat.dto";
+import { MenuDto } from "../../dtos/menu.dto";
+import { PaginationQuery } from "../../dtos/pagination.dto";
+import { ConfigDto } from "../../dtos/config.dto";
+import { WebsiteDto } from "../../dtos/website.dto";
+import { DashboardDto } from "../../dtos/dashboard.dto";
+import {
+  NewsDetailsOfMembersDto,
+  NewsOfMemberDto,
+  ToTalNewsOfMonthDto,
+} from "../../dtos/reports.dto";
 
 export interface GetUsersResponse {
-  data: UserDto[]
+  data: UserDto[];
 }
 
 export interface GetUsersByIdResponse {
-  data: UserDto
+  data: UserDto;
 }
 
 export interface UpsertUserRequest {
-  id?: string
-  fullName: string
-  email: string
-  status?: 'active' | 'inactive'
-  roleId?: string
+  id?: string;
+  fullName: string;
+  email: string;
+  status?: "active" | "inactive";
+  roleId?: string;
   // phoneNumber?: string,
-  password?: string,
+  password?: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface UpdateUserRequest {
+  name: string;
+  email: string;
 }
 
 export interface UpsertUserResponse {
-  id: string
-  name?: string
-  email?: string
-  phoneNumber?: string
+  id: string;
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
 }
 
 export interface GetCategoriesResponse {
-  data: CategoryDto[]
+  data: CategoryDto[];
 }
 
 export interface GetCategoryByIdResponse {
-  data: CategoryDto
+  data: CategoryDto;
 }
 
 export interface UpsertCategoryRequest {
-  id?: string
-  name: string
-  categoryParentId?: string
-  status: CategoryStatusEnum
-  type: CategoryTypeEnum
-  styleShow?: CategoryTypeShowEnum | string
+  id?: string;
+  name: string;
+  categoryParentId?: string;
+  status: CategoryStatusEnum;
+  type: CategoryTypeEnum;
+  styleShow?: CategoryTypeShowEnum | string;
 }
 
 export interface UpsertCategoryResponse {
-  id: string
-  name: string
-  categoryParentId?: string
-  categoryParentName?: string
+  id: string;
+  name: string;
+  categoryParentId?: string;
+  categoryParentName?: string;
 }
 
 export interface SelectOptionResponse {
-  data: SelectOption[]
+  data: SelectOption[];
 }
 
 export interface GetNewsResponse {
-  data: NewsDto[]
+  data: NewsDto[];
 }
 
 export interface NewsResponse {
-  data: NewsDto
+  data: NewsDto;
 }
 
 export interface NewsRequest {
-  id?: string
-  title?: string
-  description?: string
-  content?: string
-  publishDate?: Date
-  userId?: string
-  categoryId?: string
-  imageUrl?: string
-  status?: "draft" | "publish"
-  tagIds?: string[]
-  isHotNews?: boolean
-  metaKeyword?: string
-  view?: string
+  id?: string;
+  title?: string;
+  description?: string;
+  content?: string;
+  publishDate?: Date;
+  userId?: string;
+  categoryId?: string;
+  imageUrl?: string;
+  status?: "draft" | "publish";
+  tagIds?: string[];
+  isHotNews?: boolean;
+  metaKeyword?: string;
+  view?: string;
 }
-
 
 export interface GetNewsesRequest extends PaginationQuery {
-  style?: 'news1' | 'news2' | 'news3',
+  style?: "news1" | "news2" | "news3";
   isHotNews?: boolean;
   menuSlug?: string;
-  search?: string
+  search?: string;
 }
 export interface GetRaoVatResponse {
-  data: RaoVatDto[]
+  data: RaoVatDto[];
 }
 
 export interface RaoVatResponse {
-  data: RaoVatDto
+  data: RaoVatDto;
 }
 
 export interface RaoVatRequest {
-  id?: string
-  title?: string
-  content?: string
-  imageUrl?: string
-  extraImages?: string[]
-  categoryId?: string
-  publishDate?: Date
-  phoneNumber?: string
-  facebook?: string
-  metaKeyword?: string
-  contactName?: string
-  websiteUrl?: string
-  email?: string
-  address?: string
-  description?: string
-  status?: 'publish' | 'draft'
+  id?: string;
+  title?: string;
+  content?: string;
+  imageUrl?: string;
+  extraImages?: string[];
+  categoryId?: string;
+  publishDate?: Date;
+  phoneNumber?: string;
+  facebook?: string;
+  metaKeyword?: string;
+  contactName?: string;
+  websiteUrl?: string;
+  email?: string;
+  address?: string;
+  description?: string;
+  status?: "publish" | "draft";
 }
 
 export interface GetMenuResponse {
-  data: MenuDto[]
+  data: MenuDto[];
 }
 
 export interface MenuResponse {
-  data: MenuDto
+  data: MenuDto;
 }
 
 export interface MenuRequest {
-  id?: string
-  order?: number
-  name?: string
-  categoryId?: string
+  id?: string;
+  order?: number;
+  name?: string;
+  categoryId?: string;
 }
 export interface GetTagsResponse {
-  data: {name: string, count: number}[]
+  data: { name: string; count: number }[];
 }
 
 export interface ConfigResponse {
-  data: ConfigDto
+  data: ConfigDto;
 }
 
 export interface ConfigRequest {
-  id?: string
-  key?: string
-  value?: string
-  type?: string
+  id?: string;
+  key?: string;
+  value?: string;
+  type?: string;
 }
 
 export interface WebsiteResponse {
-  data: WebsiteDto
+  data: WebsiteDto;
 }
 
 export interface WebsiteRequest {
-  id?: string
-  logo?: string
-  footerContent?: string
-  facebookUrl?: string
-  twitterUrl?: string
-  googleUrl?: string
-  linkedinUrl?: string
+  id?: string;
+  logo?: string;
+  footerContent?: string;
+  facebookUrl?: string;
+  twitterUrl?: string;
+  googleUrl?: string;
+  linkedinUrl?: string;
 }
 
 export interface DashBoardResponse {
-  data: DashboardDto
+  data: DashboardDto;
 }
 
 export interface TotalNewsOfMonthResponse {
-  data: ToTalNewsOfMonthDto[]
+  data: ToTalNewsOfMonthDto[];
 }
 
 export interface GetNewsOfMemberResponse {
-  data: NewsOfMemberDto[]
+  data: NewsOfMemberDto[];
 }
 
 export interface GetNewsDetailsOfMembersResponse {
-  data: NewsDetailsOfMembersDto[]
+  data: NewsDetailsOfMembersDto[];
 }

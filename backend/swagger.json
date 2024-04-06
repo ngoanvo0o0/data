@@ -1357,6 +1357,46 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"CommentDto": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"createdAt": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "string",
+								"format": "date-time"
+							}
+						]
+					}
+				},
+				"required": [
+					"name",
+					"content",
+					"email",
+					"userId",
+					"avatar",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"AdvertisementPosition": {
 				"type": "string",
 				"enum": [
@@ -1509,8 +1549,7 @@
 				},
 				"required": [
 					"email",
-					"password",
-					"isRememberMe"
+					"password"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -1959,6 +1998,22 @@
 				],
 				"type": "object",
 				"additionalProperties": true
+			},
+			"ChangePasswordRequest": {
+				"properties": {
+					"currentPassword": {
+						"type": "string"
+					},
+					"newPassword": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"currentPassword",
+					"newPassword"
+				],
+				"type": "object",
+				"additionalProperties": true
 			}
 		},
 		"securitySchemes": {
@@ -1996,7 +2051,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_USERS_VIEW"
+						]
 					}
 				],
 				"parameters": []
@@ -2020,7 +2077,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_USERS_ENABLE"
+						]
 					}
 				],
 				"parameters": [],
@@ -2082,7 +2141,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_USERS_DISABLE"
+						]
 					}
 				],
 				"parameters": [
@@ -2117,7 +2178,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_MEMBER_VIEW"
+						]
 					}
 				],
 				"parameters": []
@@ -2141,7 +2204,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_MEMBER_ADD"
+						]
 					}
 				],
 				"parameters": [],
@@ -2177,7 +2242,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_MEMBER_VIEW"
+						]
 					}
 				],
 				"parameters": [
@@ -2203,7 +2270,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_MEMBER_DELETE"
+						]
 					}
 				],
 				"parameters": [
@@ -2262,7 +2331,11 @@
 				"tags": [
 					"AdminConsole"
 				],
-				"security": [],
+				"security": [
+					{
+						"": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -2346,7 +2419,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_CATEGORY_ADD"
+						]
 					}
 				],
 				"parameters": [],
@@ -2404,7 +2479,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_CATEGORY_DELETE"
+						]
 					}
 				],
 				"parameters": [
@@ -2488,7 +2565,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_POST_ADD"
+						]
 					}
 				],
 				"parameters": [],
@@ -2548,7 +2627,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_POST_DELETE"
+						]
 					}
 				],
 				"parameters": [
@@ -2576,7 +2657,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"MANAGE_POST_EDIT"
+						]
 					}
 				],
 				"parameters": [
@@ -2631,7 +2714,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"RAOVAT_ADD"
+						]
 					}
 				],
 				"parameters": [],
@@ -2689,7 +2774,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"RAOVAT_DELETE"
+						]
 					}
 				],
 				"parameters": [
@@ -2766,7 +2853,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"CONFIG_MENU_ADD"
+						]
 					}
 				],
 				"parameters": [],
@@ -2824,7 +2913,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"CONFIG_MENU_DELETE"
+						]
 					}
 				],
 				"parameters": [
@@ -2890,7 +2981,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"CONFIG_SEO_EDIT"
+						]
 					}
 				],
 				"parameters": [],
@@ -2946,7 +3039,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"CONFIG_SEO_EDIT"
+						]
 					}
 				],
 				"parameters": [],
@@ -2985,7 +3080,9 @@
 				],
 				"security": [
 					{
-						"": []
+						"": [
+							"HISTORY_ACTIVITY_TEAM"
+						]
 					}
 				],
 				"parameters": []
@@ -3174,6 +3271,39 @@
 				]
 			}
 		},
+		"/admin-console/contact-histories": {
+			"get": {
+				"operationId": "ContactHistories",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/CommentDto"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"AdminConsole"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/advertisements": {
 			"get": {
 				"operationId": "GetAdvertisements",
@@ -3240,7 +3370,9 @@
 				},
 				"security": [
 					{
-						"": []
+						"": [
+							"ADS_ADD"
+						]
 					}
 				],
 				"parameters": [],
@@ -3308,7 +3440,9 @@
 				},
 				"security": [
 					{
-						"": []
+						"": [
+							"ADS_EDIT"
+						]
 					}
 				],
 				"parameters": [
@@ -3347,7 +3481,9 @@
 				},
 				"security": [
 					{
-						"": []
+						"": [
+							"ADS_DELETE"
+						]
 					}
 				],
 				"parameters": [
@@ -4147,6 +4283,62 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/users/change-password": {
+			"post": {
+				"operationId": "ChangePassword",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"website"
+				],
+				"security": [
+					{
+						"": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChangePasswordRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/me": {
+			"put": {
+				"operationId": "UpdateProfile",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"website"
+				],
+				"security": [
+					{
+						"": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {}
+						}
+					}
+				}
 			}
 		}
 	},

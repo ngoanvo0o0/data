@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PagedRaoVatItemDto, } from "~/models/news.model";
+import { PagedRaoVatItemDto, } from "~/models/news.model";
 import {useFetch, useRoute, useRuntimeConfig, useSeoMeta, useRouter} from "nuxt/app";
-import type {PagedList} from "~/models/pagination.model";
-import type {CategoryDto} from "~/models/category.model";
+import {PagedList} from "~/models/pagination.model";
+import {CategoryDto} from "~/models/category.model";
 import {generateSubPages} from "~/utils/functions";
 import { ref } from "vue";
 
@@ -52,74 +52,91 @@ const filterCategory = (slug: string) => {
 const generateRaoVatUrl = (page: number) => {
   return `/rao-vat?page=${page}` + (!!slug ? `&categorySlug=${slug}` : '');
 }
-
-const handleTabClick = (tab) => {
-  filterCategory(tab.slug)
-}
-
-const breadcrumbs = computed(() => {
-  
-  let _breadcrumbs = []
-   _breadcrumbs.push({ url: '/', title: 'Home' });
-   _breadcrumbs.push({ url: `/rao-vat`, title: 'Rao Vặt' });
-  return _breadcrumbs
-})
 </script>
 
 <template>
-  <SharedContentMasterLayout>
-    <template #breadcrumb>
-      <SharedBreadcrumb :breadcrumbs="breadcrumbs" :category="'Rao Vặt'" :tabs="categories" @onTabClick="handleTabClick"/>
-    </template>
-    <template #left-side>
-      <div class="raovat-content row">
-        <template v-if="raovatList.items.length > 0">
-          <div v-for="(news, index) in raovatList?.items" class="raovat-content-item col-12 col-md-6 col-lg-4 relative">
-            <div class="raovat-item h-100">
-              <News3Item :news="news" :isShowImage="true" :isRaoVat="true"/>
-            </div>
-            <div class="box-category">
-              <SharedBoxCategory :category="news.categoryName" :slug="news.categoryName"/>
+  <div id="wrapper" class="container">
+    <section class="bg-body box-layout pt-20">
+      <div class="row">
+        <div class="col-lg-8 col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-30">
+                <button class="filter-btn" :class="category.slug === query.categorySlug && 'active' " v-for="category in categories" @click="filterCategory(category.slug)">{{category.name}}</button>
+              </div>
+              <div class="topic-border color-apple mb-30">
+                <div class="topic-box-lg color-apple">Rao vặt</div>
+              </div>
             </div>
           </div>
-        </template>
-        <template v-else>
-          <div style="width: 100%; padding: 0 15px">
-            <SharedNothingFound />
+          <div class="row">
+            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12" v-for="news in raovatList?.items">
+              <News3Item :news="news" :is-rao-vat="true"/>
+            </div>
           </div>
-        </template>
+          <div v-if="raovatList && raovatList?.totalPage > 1" class="row mt-20-r mb-30">
+            <div class="col-sm-6 col-12">
+              <div  class="pagination-btn-wrapper text-center--xs mb15--xs">
+                <ul>
+                  <li :class="{active: 1 == raovatList?.page}">
+                      <a :href="generateRaoVatUrl(1)">1</a>
+                    </li>
+                    <li v-if="subPages.length > 0 && subPages[0] > 2"><span>...</span></li>
+                    <li v-for="index in subPages" :class="{active: index == raovatList?.page}">
+                      <a :href="generateRaoVatUrl(index)">{{ index }}</a>
+                    </li>
+                    <li v-if="subPages.length > 0 && subPages[subPages.length - 1] + 1 < (raovatList?.totalPage ?? 0)"><span>...</span></li>
+                    <li v-if="raovatList?.totalPage  && raovatList?.totalPage > 1" :class="{active: raovatList?.totalPage == raovatList?.page}">
+                      <a :href="generateRaoVatUrl(raovatList.totalPage)">{{ raovatList.totalPage }}</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 col-12">
+              <div class="pagination-result text-right pt-10 text-center--xs">
+                <p class="mb-none">Trang {{ raovatList?.page }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <!-- <SidebarAd /> -->
+          <SidebarRaoVat class="mb-30"/>
+          <SidebarMostView class="mb-30"/>
+        </div>
       </div>
-    </template>
-    <template #right-side>
-      <SidebarMostView :pagesize="10"/>
-      <SidebarAd />
-    </template>
-  </SharedContentMasterLayout>
+    </section>
+  </div>
 </template>
 
-<style>
-.raovat-content {
-  margin-top: -15px;
+<style scoped>
+
+.rao-vat-category-tag {
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 700;
 }
-.raovat-item {
+
+.filter-btn {
+  margin-right: 5px;
+  margin-bottom: 8px;
+  border: 1px solid #000;
+  padding: 5px 20px;
+  color: #000;
+  transition: all 0.3s ease;
   background-color: white;
+  font-weight: 600;
+  outline: none !important;
 }
 
-.raovat-content .raovat-content-item {
-  padding: 15px;
+.filter-btn.active {
+  color: #E53935;
+  border-color: #E53935;
 }
 
-.raovat-content .raovat-content-item .raovat-item {
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.08)
-}
-
-.raovat-content .raovat-content-item .raovat-item .news-info {
-  padding: 0 15px !important;
-}
-
-.raovat-content .raovat-content-item .box-category {
-  position: absolute;
-  top: 15px;
-  left: 30px;
+.filter-btn:hover {
+  background-color: #E53935;
+  color: #fff;
+  border-color: #E53935;
 }
 </style>

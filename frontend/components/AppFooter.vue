@@ -1,119 +1,120 @@
 <template>
-  <footer>
-    <div class="footer-area-top">
-      <div class="element-container">
-        <div class="row" style="max-width: 882px">
-          <div class="col-xl-6 col-sm-12">
-            <div class="footer-box">
-              <h2 class="title-bold-light title-bar-left text-uppercase">Về chúng tôi</h2>
-              <div class="row">
-                <div class="col-12">
-                  <a href="/" class="footer-logo img-fluid">
-                    <nuxt-img style="height: 70px;" src="/img/logotapnews.png" alt="Người Việt Plus logo"
-                      class="img-fluid" />
-                  </a>
-                </div>
-                <div class="col-12 mt-5 text-white">
-                  <p>Address: 5201 S Torrey Pines Dr. , # 1246 Las Vegas, NV 89118</p>
-                </div>
+     <footer>
+            <div class="footer-area-top">
+                <div class="container box-layout">
+                    <div class="row" style="max-width: 882px">
+                      <div class="col-xl-6 col-sm-12">
+                        <div class="footer-box">
+                          <h2 class="title-bold-light title-bar-left text-uppercase">Về chúng tôi</h2>
+                          <div class="row">
+                            <div class="col-12">
+                              <a href="/" class="footer-logo img-fluid">
+                                <nuxt-img  style="height: 70px;" src="/img/logotapnews.png" alt="Người Việt Plus logo" class="img-fluid" />
+                              </a>
+                            </div>
+                            <div class="col-12 mt-5 text-white">
+                              <p>Address: 7280 Sprint Flower Ave, Las Vegas, NV 89117</p>
+                              <br>
+                              <p>Mail: contact.tapnews@gmail.com</p>
+                            </div>
 
-                <div class="col-12">
-                  <ul class="footer-social">
-                    <li>
-                      <a :href="config.facebookUrl" class="text-white" title="facebook">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="config.twitterUrl" class="text-white" title="twitter">
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="config.googleUrl" class="text-white" title="google-plus">
-                        <i class="fa fa-google-plus" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a :href="config.linkedinUrl" class="text-white" title="linkedin">
-                        <i class="fa fa-linkedin" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" class="text-white" title="pinterest">
-                        <i class="fa fa-pinterest" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" class="text-white" title="rss">
-                        <i class="fa fa-rss" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" class="text-white" title="vimeo">
-                        <i class="fa fa-vimeo" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                  </ul>
+                            <div class="col-12">
+                              <ul class="footer-social">
+                                <li>
+                                  <a :href="config.facebookUrl" class="text-white" title="facebook">
+                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a :href="config.twitterUrl" class="text-white" title="twitter">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a :href="config.googleUrl" class="text-white" title="google-plus">
+                                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a :href="config.linkedinUrl" class="text-white" title="linkedin">
+                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="text-white" title="pinterest">
+                                    <i class="fa fa-pinterest" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="text-white" title="rss">
+                                    <i class="fa fa-rss" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="text-white" title="vimeo">
+                                    <i class="fa fa-vimeo" aria-hidden="true"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                        <div class="col-xl-6 col-sm-12" v-if="false">
+                            <div class="footer-box">
+                                <h2 class="title-bold-light title-bar-left text-uppercase">TAGS</h2>
+                                <ul class="popular-categories">
+                                    <li v-for="tag in tags?.data">
+                                        <a href="#">{{tag.name}}
+                                                <span>{{tag.count}}</span>
+                                            </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                </div>
+              <div class="footer-area-bottom" style="border-top: 1px solid #B9B9B9;">
+                <div class="container box-layout">
+                  <div class="row">
+                    <div class="col-12 col-md-8 text-center text-md-left">
+                      <p class="m-0 text-white">Copyright © 2015-23 Tap News.</p>
+                    </div>
+                    <div class="page-links col-12 col-md-4 d-flex justify-content-center gap-4 justify-content-md-end">
+                      <a class="text-white" href="/">Trang Chủ</a>
+                      <a class="text-white" href="/lien-he">Liên Hệ</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-xl-6 col-sm-12" v-if="false">
-            <div class="footer-box">
-              <h2 class="title-bold-light title-bar-left text-uppercase">TAGS</h2>
-              <ul class="popular-categories">
-                <li v-for="tag in tags?.data">
-                  <a href="#">{{ tag.name }}
-                    <span>{{ tag.count }}</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="footer-area-bottom" style="border-top: 1px solid #B9B9B9;">
-        <div class="element-container">
-          <div class="row">
-            <div class="col-8">
-              <p class="m-0 text-white">Copyright © 2015-23 Người Việt plus.</p>
-            </div>
-            <div class="page-links col-4 d-flex justify-content-end gap-4">
-              <a class="text-white" href="/">Trang Chủ</a>
-              <a class="text-white" href="/">Liên Hệ</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+        </footer>
 </template>
 
 <script setup lang="ts">
-import { useFetch, useRoute, useRuntimeConfig } from "nuxt/app";
+import {useFetch, useRoute, useRuntimeConfig} from "nuxt/app";
 const $config = useRuntimeConfig();
 const $route = useRoute();
-const { data: tags } = await useFetch<{ data: { name: string, count: number }[] }>("/api/tags", {
+const { data: tags } = await useFetch<{data: {name: string, count: number}[]}>("/api/tags", {
   baseURL: $config.public.apiURL
 });
 
 
 const { data: config } = await useFetch<any>
-  ("/api/config", { baseURL: $config.public.apiURL });
+            ("/api/config", {baseURL: $config.public.apiURL});
 </script>
 
 <style scoped>
 .gap-4 {
   gap: 1rem;
 }
-
-.page-links>a {
+.page-links > a {
   color: white
 }
-
-.page-links>a:hover {
+.page-links > a:hover {
   color: #e53935;
 }
+
 </style>

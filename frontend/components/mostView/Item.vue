@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type NewsDto } from "~/models/news.model";
+import { NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
   news: NewsDto

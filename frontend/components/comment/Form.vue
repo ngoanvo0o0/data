@@ -4,7 +4,8 @@ import { ref } from 'vue';
 
 const props = defineProps<{
   newsId?: string,
-  raoVatId?: string
+  raoVatId?: string,
+  title: string
 }>()
 const $config = useRuntimeConfig();
 const emits = defineEmits(['createCommentSuccess'])
@@ -46,7 +47,7 @@ const resetForm = () => {
 
 <template>
     <div class="leave-comments">
-        <h2 class="title-semibold-dark size-xl mb-20 mt-50">Bình luận</h2>
+        <h2 class="title-semibold-dark size-xl mb-20 mt-50" v-if="title">{{title}}</h2>
         <form id="leave-comments">
             <div class="row">
                 <div class="col-md-4 col-sm-12">
@@ -63,7 +64,7 @@ const resetForm = () => {
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <textarea v-model="content" placeholder="Bình luận*" class="textarea form-control" id="form-message" rows="8" cols="20"></textarea>
+                        <textarea v-model="content" placeholder="Nội dung*" class="textarea form-control" id="form-message" rows="8" cols="20"></textarea>
                         <div class="help-block with-errors text-danger" v-if="!content && isFirstSubmitComment">Vui lòng nhập nội dung của bạn</div>
                     </div>
                 </div>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {useFetch, useRoute, useRuntimeConfig, useSeoMeta} from "nuxt/app";
-import type {PagedNewsItemDto, PagedRaoVatItemDto} from "~/models/news.model";
-import type {PagedList} from "~/models/pagination.model";
+import {PagedNewsItemDto, PagedRaoVatItemDto} from "~/models/news.model";
+import {PagedList} from "~/models/pagination.model";
 import { computed, ref } from "vue";
 const $config = useRuntimeConfig();
 const $route = useRoute();
 const query = $route.query;
-const apiUrl = $config.public.apiURL as string;
+const apiUrl = $config.public.apiURL;
 
 const getPostList = async (slug: string, size = 3) => {
   const { data: hotNewses } = await useFetch<PagedList<PagedNewsItemDto>>("/api/news", {
@@ -20,7 +20,7 @@ const getPostList = async (slug: string, size = 3) => {
   return hotNewses;
 }
 
-const [
+const [newsList,
       lifePostList,
       healthPostList,
       culturalPostList,
@@ -29,7 +29,7 @@ const [
       foodPostList,
       readerPostList,
       immigrantPostList,] = await Promise.all([
-  // getPostList('tin-tuc', 5),
+  getPostList('tin-tuc', 5),
   getPostList('doi-song'),
   getPostList('suc-khoe'),
   getPostList('van-hoa'),
@@ -90,57 +90,32 @@ const adBot = ads.value?.find(e => e.position === 'bottom')
 </script>
 
 <template>
-  <div class="">
-    <section class="top-section section-wrapper">
-      <!-- <TopStoryHeader v-if="newsList?.items?.length" :newses="newsList?.items" /> -->
-      <div class="element-container">
-        <TopStoryContent />
-      </div>
-    </section>
+  <div class="mt-20">
+    <TopStoryHeader v-if="newsList?.items?.length" :newses="newsList?.items" />
+    <TopStoryContent v-if="newsList?.items?.length" :newses="newsList?.items" />
     <!-- <SidebarAd class="mt-30" v-if="adMid" :imageUrl="adMid.imageUrl" :url="adMid.url" /> -->
 
-    <section class="section-wrapper">
-      <div class="element-container">
+    <section class="container">
+      <div class="bg-body box-layout">
         <div class="row">
-          <div class="col-lg-9 col-md-12">
+          <div class="col-lg-8 col-md-12">
             <News3Area :newses="lifeAndHealthPostList" label="Sức khoẻ - đời sống"/>
             <News2Area :newses="cultureAndEntertainmentPostList" label="Văn hoá - giải trí"/>
+            <News1Area :newses="travelAndFoodPostList" label="Du lịch - ẩm thực"/>
+            <News3Area :newses="readerPostList?.items"/>
+            <News2Area :newses="immigrantPostList?.items"/>
           </div>
-          <div class="col-lg-3 col-md-12">
+          <div class="col-lg-4 col-md-12">
             <SidebarRaoVat />
+            <SidebarMostView class="mt-30"/>
+            <!-- <SidebarAd class="mt-30" v-if="adRight" :imageUrl="adRight.imageUrl" :url="adRight.url" /> -->
+
             <SidebarAd class="mt-30" />
           </div>
         </div>
-        <News1Area
-          :newses="[
-            {
-              label: 'Du Lịch - Ẩm Thực',
-              news: travelAndFoodPostList
-            },
-            {
-              label: 'Di Trú',
-              news: immigrantPostList?.items
-            },
-            {
-              label: 'Bạn đọc',
-              news: readerPostList?.items
-            },
-          ]"
-        />
       </div>
     </section>
 
      <!-- <SidebarAd class="mt-30" v-if="adBot" :imageUrl="adBot.imageUrl" :url="adBot.url" /> -->
   </div>
 </template>
-
-<style>
-.top-section {
-  background-image: url('	https://demo.xpeedstudio.com/vinkmag/wp-content/uploads/2018/11/banner-bg.png');
-  width: 100%;
-}
-
-.section-wrapper {
-  padding: 30px 0;
-}
-</style>
