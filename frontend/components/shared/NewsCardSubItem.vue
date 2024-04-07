@@ -3,16 +3,20 @@ import { type NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
   news: NewsDto
+  showTag?: boolean
 }>()
 
 </script>
 
 <template>
-  <div class="raovat-item media bg-body item-shadow-gray" style="margin: 20px 0;">
-    <a class="rao-vat-img img-opacity-hover" :href="`/rao-vat/${news.slug}`">
+  <div class="raovat-item media bg-body" style="margin: 20px 0;box-shadow: 0 1px 0px 0 rgba(211, 211, 211, .75);">
+    <!-- <a class="rao-vat-img img-opacity-hover" :href="`/rao-vat/${news.slug}`">
       <nuxt-img  :src="news.imageUrl || ' '" format="webp" :alt="news.title" class="rao-vat-img w-full h-full" />
-    </a>
-    <div class="media-body">
+    </a> -->
+    <div class="media-body" style="margin-left: 0px;">
+      <div v-if="showTag">
+        <SharedBoxCategory :category="news.categoryName"/>
+      </div>
       <div class="time">
         <div class="post-date-light">
           <SharedNewsAuthor
@@ -22,7 +26,7 @@ const props = defineProps<{
         </div>
       </div>
       <h3 class="raovat-title" style="margin-bottom: 15px; margin-top: 10px;">
-        <a :href="`/rao-vat/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
+        <a :href="`/bai-viet/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
       </h3>
     </div>
   </div>

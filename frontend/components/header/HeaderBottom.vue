@@ -1,7 +1,7 @@
 <template>
   <div class="header-bottom" id="sticker">
     <div class="element-container main-menu-area">
-      <div class="bg-body" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.08)">
+      <div class="bg-body">
         <div class="row no-gutters d-flex align-items-center">
           <div class="menu-left position-static min-height-none" style="width: 95%">
             <div class="ne-main-menu">
@@ -137,6 +137,7 @@ const handleSeparateMenu = (menus: MenuDto[]) => {
         const index = menuGroupOne.value.findIndex((c: any) => c.id == item.id)
         if (index === -1) {
           if (categoriesNeedToMergeGroupTree.includes(item.slug)) {
+
             menuGroupThree.value.push(item)
           } else {
             menuGroupOne.value.push(item)
@@ -203,6 +204,13 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   }
 }
 
+.not-home-page .header-bottom,
+.not-home-page .main-menu-area .bg-body {
+  box-shadow: unset;
+  border-bottom: unset;
+  border-top: unset;
+}
+
 .header-bottom {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .08);
   border-bottom: 2px solid #ddd;
@@ -214,7 +222,8 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   }
 
   .main-menu-area .bg-body {
-    background-color: white
+    background-color: white;
+    /* box-shadow: 0 2px 2px 0 rgba(0,0,0,.08) */
   }
 
   .main-menu-area .ne-main-menu nav ul li:hover a {
@@ -278,11 +287,11 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
     display: block
   }
 
-  .menu-right .header-action-item {
+  .menu-right .header-action-item .search-icon {
     position: relative;
   }
 
-  .menu-right .header-action-item::after {
+  .menu-right .header-action-item .search-icon::after {
     content: "";
     width: 1px;
     height: 20px;
@@ -300,19 +309,21 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   .header-bottom .top-bar-bottom {
     display: none;
   }
-
   .header-bottom .menu-left {
     display: none;
   }
-
-  .header-action-item ul li .fa-search {
-    color: #232323 !important;
+  .menu-right .header-action-item {
+    position: fixed;
+    top: 15px;
+  }
+  .menu-right .header-action-item .search-icon::after {
+    display: none;
   }
 }
 
-/* @media screen and (max-width:576px) {
+@media screen and (max-width:576px) {
   .header-action-item .search-icon {
-    background-color: #d72924 !important;
+    background-color: white !important;
   }
-} */
+}
 </style>

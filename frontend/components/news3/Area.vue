@@ -11,24 +11,21 @@ const props = defineProps<{
   <div class="">
     <SharedNewsHeader :header="label || newses[0].categoryName"/>
     <div class="row">
-      <div class="col-md-6 col-12">
-        <News3Item :news="newses[0]" :isMain="true"/>
+      <div class="col-md-6 col-12 left">
+        <TopStoryItem :news="newses[0]" :isShowTime="true" class="h-100 story-item-top"/>
       </div>
-      <div class="col-md-6 col-12 w-100">
-        <div class="row">
-          <div v-for="news in newses.slice(1, 5)" :key="news.id" class="col-12 col-sm-6">
-            <News3Item :news="news"/>
-          </div>
-        </div>
+      <div class="col-md-6 col-12 right">
+        <TopStoryItem :news="newses[1]" :isShowTime="true" class="h-100 story-item-top"/>
       </div>
     </div>
   </div>
 </template>
 
-<style >
-/* .news-3-item-section {
-  display: flex;
-  gap: 30px;
-} */
+<style scoped>
+@media screen and (max-width:768px) {
+  .right {
+    margin-top: 25px
+  }
+}
 
 </style>

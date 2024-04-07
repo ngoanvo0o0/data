@@ -18,7 +18,7 @@ const sortedList = computed(() => (props.newses?.sort((v1, v2) => (new Date(v2.p
       </div>
       <div class="col-lg-4 col-12 w-100">
         <div class="row">
-          <div v-for="(news, index) in newses.slice(1, 4)" class="col-12">
+          <div v-for="(news, index) in newses.slice(1, 4)" :key="news.id" class="col-12">
             <News3Item :news="news" :isShowImage="index === 0"/>
             <div v-if="index < newses.slice(1, 4).length - 1" class="line"></div>
           </div>

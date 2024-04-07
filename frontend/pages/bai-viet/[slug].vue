@@ -143,11 +143,9 @@ useSchemaOrg([
   display: flex;
   justify-content: center;
 }
-
 .news-detail .main-image img {
   max-height: 600px;
 }
-
 .news-detail-content {
   background-color: #fff;
   padding: 85px 80px 40px
@@ -366,6 +364,11 @@ useSchemaOrg([
   }
   .news-detail-content {
     padding: 85px 40px 40px;
+  }
+  .news-detail .main-image {
+    height: auto;
+    display: flex;
+    justify-content: center;
   }
 }
 

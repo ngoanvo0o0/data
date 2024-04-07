@@ -4,12 +4,14 @@ import type { NewsDto } from "~/models/news.model";
 const props = defineProps<{
   news: NewsDto
   isCenter?: boolean
+  isShowTime?: boolean
+  isShowAuthor?: boolean
 }>()
 
 </script>
 
 <template>
-  <NuxtLink :to="`bai-viet/${news.slug}`" class="top-story-item img-overlay-70 mb-4 position-relative d-block">
+  <NuxtLink :to="`bai-viet/${news.slug}`" class="top-story-item img-overlay-70 img-scale-animate mb-4 position-relative d-block">
     <nuxt-img :src="news.imageUrl || ' '" :alt="news.title" format="webp" class="img-fluid w-100 h-100" />
     <div class="top-story-content">
       <div class="box-category">
@@ -22,7 +24,8 @@ const props = defineProps<{
         <h3 class="title" :class="[isCenter ? 'title-center' : 'title-side']" v-else>
           <a :href="`bai-viet/${news.slug}`" class="elipsis-3-lines">{{news.title}}</a>
         </h3>
-        <div v-if="isCenter" class="post-date-light" style="display: flex; align-items: center;">
+        <div v-if="isCenter || isShowTime" class="post-date-light" style="display: flex; align-items: center;">
+          <p v-if="isShowAuthor" class="news-author" style="margin: 0;">{{ news.author }}</p>
           <SharedNewsAuthor
               :author="news.author"
               :publishDate="news.publishDate"
@@ -37,7 +40,7 @@ const props = defineProps<{
   </NuxtLink>
 </template>
 
-<style scoped>
+<style>
 .title-medium-light {
   margin-bottom: 10px;
 }
@@ -48,7 +51,32 @@ const props = defineProps<{
   position: absolute;
   top: 0;
 }
-.news2-view {
+.mask-content-lg {
+  position: absolute;
+  z-index: 7;
+  bottom: 0;
+  left: 0;
+  padding: 24px
+}
+.title {
+  margin: 0 0 10px
+}
+.news-author {
+  color: #fff !important;
+  margin-right: 10px !important;
+  font-size: 14px !important;
+}
+.mask-content-lg .post-date-light ul li,
+.mask-content-lg .post-date-light .news2-view {
+  margin: 0 !important;
+}
+
+.mask-content-lg .post-date-light .news2-view {
+  margin-left: 12px !important;
+}
+
+.news2-view,
+.news-author {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -68,12 +96,12 @@ const props = defineProps<{
   text-shadow: 1px 1px 3px rgba(0,0,0,.4);
 }
 .title-center a {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 500;
   line-height: 1.2em;
 }
 .title-side a {
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 500;
 }
 .top-story-item:hover:after {
@@ -94,4 +122,11 @@ const props = defineProps<{
   -o-transition: all ease 500ms;
   transition: all ease 500ms;
 }
+
+/* @media only screen and (max-width:991.9px) {
+  .mask-content-lg {
+      left: 15px;
+      bottom: 0
+  }
+} */
 </style>

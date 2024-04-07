@@ -1287,9 +1287,9 @@ ul.item2-inline li:last-child {
     background-image: -moz-linear-gradient(transparent, #111), -moz-linear-gradient(transparent, #111);
     background-image: -o-linear-gradient(transparent, #111), -o-linear-gradient(transparent, #111);
     background-image: linear-gradient(transparent, #111), linear-gradient(transparent, #111); */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(55%, transparent), to(rgba(0, 0, 0, .95)));
-    background: -o-linear-gradient(top, transparent 55%, rgba(0, 0, 0, .95) 100%);
-    background: linear-gradient(to bottom, transparent 55%, rgba(0, 0, 0, .95) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, transparent), to(rgba(0, 0, 0, .95)));
+    background: -o-linear-gradient(top, transparent 20%, rgba(0, 0, 0, .95) 100%);
+    background: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, .95) 100%);
     content: "";
     height: 70%;
     bottom: 0;
@@ -2318,21 +2318,6 @@ ul.item2-inline li:last-child {
     top: 50%;
     left: 30px;
     padding-right: 30px
-}
-
-.mask-content-lg {
-    position: absolute;
-    z-index: 7;
-    bottom: 10px;
-    left: 30px;
-    padding-right: 30px
-}
-
-@media only screen and (max-width:575px) {
-    .mask-content-lg {
-        left: 15px;
-        bottom: 0
-    }
 }
 
 .mask-content-top-left {
@@ -4245,8 +4230,8 @@ div#wrapper.open>.offcanvas-mask {
     text-align: left
 }
 
-.header-style5 .main-menu-area .ne-main-menu nav ul li a {
-    padding: 18px 8px;
+.header-style5 .main-menu-area .ne-main-menu nav ul li:not(.logo-area) a {
+    padding: 30px 8px;
     color: black
 }
 
@@ -7266,4 +7251,8 @@ ul.footer-social li a:hover {
     .element-container {
         max-width: 1024px;
     }
+}
+
+.section-wrapper {
+    margin-top: 20px;
 }

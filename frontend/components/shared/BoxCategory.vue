@@ -42,12 +42,12 @@ const props = defineProps<{
 }
 
 .category-type[data-category='Du lịch'] {
-  background-color: #3a0ca3;
+  background-color: #FF4500;
 }
 
 .category-type[data-category='Ẩm thực'],
 .category-type[data-category='Ăn uống'] {
-  background-color: #FF4500;
+  background-color: #3a0ca3;
 }
 
 .category-type[data-category='Bạn đọc'] {

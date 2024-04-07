@@ -25,7 +25,7 @@ onMounted(() => {
 
 <template>
   <div class="header-top-bar">
-    <div class="top-bar-top" style="background-color: #2c2c2c">
+    <div class="top-bar-top">
       <div class="element-container">
         <div class="" style="display: flex; justify-content: space-between">
           <div style="background-color: #d72924;padding-right: 20px;padding-left: 20px;display: flex;align-items:center">
@@ -43,7 +43,7 @@ onMounted(() => {
               <li>
                 <a v-if="!userStore.user?.name" class="sign-in" href="/sign-in">{{ userStore.user?.name || 'Đăng Nhập' }}</a>
                 <div v-else class="position-relative text-left">
-                  <span class="cursor-pointer" @click="isOpenActionDropdown = !isOpenActionDropdown"> {{ userStore.user?.name }}</span>
+                  <span class="cursor-pointer sign-in" @click="isOpenActionDropdown = !isOpenActionDropdown"> {{ userStore.user?.name }}</span>
                   <div v-if="isOpenActionDropdown" class="user-action-dropdown rounded">
                       <a href="/user-info">Thông Tin Cá Nhân</a>
                       <a href="/change-password">Đổi Mật Khẩu</a>
@@ -63,7 +63,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="banner element-container">
+    <!-- <div class="banner element-container">
       <div class="bg-body">
         <div class="top-bar-bottom pt-20 pb-20 d-none d-lg-block">
           <div class="row d-flex align-items-center">
@@ -83,7 +83,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -143,7 +143,7 @@ onMounted(() => {
 }
 
 @media screen and (max-width:992.9px) {
-  .header-top-bar .banner {
+  .header-top-bar {
     display: none;
   }
 }

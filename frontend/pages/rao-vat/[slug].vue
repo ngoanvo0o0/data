@@ -164,7 +164,6 @@ const breadcrumbs = computed(() => {
   display: flex;
   justify-content: center;
 }
-
 .news-detail .main-image img {
   max-height: 600px;
 }
@@ -485,5 +484,13 @@ slides::-webkit-scrollbar {
 .render-html>article a {
   text-decoration: underline;
   color: #3851e5;
+}
+
+@media screen and (max-width:992px) {
+  .news-detail .main-image {
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

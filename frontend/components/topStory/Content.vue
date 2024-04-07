@@ -31,20 +31,11 @@ const mostViewNewsList = await getMostViewNewsList();
 <template>
   <section class="top-story">
     <div class="wrapper">
-      <div class="item left">
-        <div class="sub-item">
-          <TopStoryItem :news="mostViewNewsList?.items[0]" class="h-100"/>
-        </div>
-        <div class="sub-item">
-          <TopStoryItem :news="mostViewNewsList?.items[1]" class="h-100"/>
-        </div>
-      </div>
-
-      <div class="item center" >
+      <div class="item left" >
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel1">
           <div class="carousel-inner">
             <div v-for="(item, index) in mostViewNewsList?.items.slice(3)" :key="item.is" class="carousel-item" :class="[index === 0 ? 'active' : '']" style="height: 100%;">
-              <TopStoryItem :news="item" :isCenter="true" class="top-story-item-wrapper" />
+              <TopStoryItem :news="item" :isCenter="true" :isShowAuthor="true" class="top-story-item-wrapper story-item-main" />
             </div>
           </div>
           <div class="control">
@@ -60,26 +51,30 @@ const mostViewNewsList = await getMostViewNewsList();
           </div>
         </div>
       </div>
-
       <div class="item right">
-        <div class="sub-item">
-          <TopStoryItem :news="mostViewNewsList?.items[2]" class="h-100"/>
+        <div class="top">
+          <TopStoryItem :news="mostViewNewsList?.items[2]" :isShowTime="true" class="h-100 story-item-top"/>
         </div>
-        <div class="sub-item">
-          <TopStoryItem :news="mostViewNewsList?.items[3]" class="h-100"/>
+        <div class="bottom">
+          <div class="sub-item">
+            <TopStoryItem :news="mostViewNewsList?.items[0]" :isShowTime="true" class="h-100 story-item-bottom"/>
+          </div>
+          <div class="sub-item">
+            <TopStoryItem :news="mostViewNewsList?.items[1]" :isShowTime="true" class="h-100 story-item-bottom"/>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<style scoped>
+<style>
 .top-story .bg-body {
   background-color: transparent;
 }
 
 .top-story {
-  height: 400px;
+  height: 500px;
 }
 
 .top-story-item-wrapper {
@@ -100,22 +95,43 @@ const mostViewNewsList = await getMostViewNewsList();
   overflow: hidden;
 }
 
-.top-story .wrapper .item.center {
-  width: 50%;
-  flex: 1;
+.top-story .wrapper .item.left {
+  width: 60%
 }
 
-.top-story .wrapper .item.left,
 .top-story .wrapper .item.right {
-  width: 25%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 100%;
 }
 
-.top-story .wrapper .item .sub-item {
-  flex: 1;
-  height: calc((100% - 10px) / 2);
+.top-story .wrapper .item.right .top {
+  height: 60%
+}
+
+.top-story .wrapper .item.right .bottom {
+  height: 40%
+}
+
+.top-story .wrapper .item.right .bottom {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+}
+
+.top-story .wrapper .item.right .bottom .sub-item {
+  flex: 1
+}
+
+.story-item-bottom .title a {
+  font-size: 15px;
+}
+
+.story-item-top .mask-content-lg,
+.story-item-bottom .mask-content-lg {
+  padding: 18px !important;
 }
 
 .top-story .carousel-inner {
@@ -159,65 +175,41 @@ const mostViewNewsList = await getMostViewNewsList();
   flex-grow: 1;
 }
 
-@media screen and (max-width:960px) {
+@media screen and (max-width:992px) {
   .top-story {
     height: auto;
   }
-  .top-story-item-wrapper {
-    height: 500px;
-  }
-  .top-story .wrapper {
+  .top-story .wrapper,
+  .item.right .bottom {
     flex-direction: column;
-    gap: 30px;
+    gap: 20px
   }
-  .top-story .wrapper .item.center,
+  .top-story .wrapper .item.right,
+  .top-story .wrapper .item.right .bottom,
+  .top-story .wrapper {
+    gap: 20px
+  }
   .top-story .wrapper .item.left,
   .top-story .wrapper .item.right {
     width: 100%;
-    height: 300px;
-  }
-  .top-story .wrapper .item.left,
-  .top-story .wrapper .item.right {
-    flex-direction: row;
-    gap: 30px;
-  }
-  .top-story .control {
-    top: 10px;
-    right: 10px;
-  }
-
-  .top-story .wrapper .item .sub-item {
-    height: unset
+    height: auto
   }
 }
 
+
 @media screen and (max-width:768px) {
-  .top-story .wrapper {
-    gap: 20px;
+  .top-story .wrapper .item.right .bottom {
+    flex-direction: column;
   }
-  .top-story-item-wrapper {
-    height: 400px;
-  }
-  .top-story .wrapper .item.center,
-  .top-story .wrapper .item.left,
-  .top-story .wrapper .item.right {
-    gap: 20px;
-  }
+
+  .story-item-main .title a {
+  font-size: 22px;
+}
 }
 
 @media screen and (max-width:576px) {
   .top-story-item-wrapper {
     height: 350px;
-  }
-  .top-story .wrapper .item.center,
-  .top-story .wrapper .item.left,
-  .top-story .wrapper .item.right {
-    width: 100%;
-    height: auto;
-  }
-  .top-story .wrapper .item.left,
-  .top-story .wrapper .item.right {
-    flex-direction: column;
   }
 }
 </style>
