@@ -91,7 +91,7 @@ const adBot = ads.value?.find(e => e.position === 'bottom')
 
 <template>
   <div class="">
-    <section class="top-section section-wrapper">
+    <section class="top-section section-wrapper" style="padding-bottom: 0;">
       <!-- <TopStoryHeader v-if="newsList?.items?.length" :newses="newsList?.items" /> -->
       <div class="element-container">
         <TopStoryContent />
@@ -135,12 +135,13 @@ const adBot = ads.value?.find(e => e.position === 'bottom')
 </template>
 
 <style>
-.top-section {
-  background-image: url('	https://demo.xpeedstudio.com/vinkmag/wp-content/uploads/2018/11/banner-bg.png');
-  width: 100%;
-}
-
 .section-wrapper {
   padding: 30px 0;
+}
+
+@media (max-width: 560px) {
+  .section-wrapper {
+    padding: 0;
+  }
 }
 </style>

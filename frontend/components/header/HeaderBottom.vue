@@ -1,7 +1,7 @@
 <template>
   <div class="header-bottom" id="sticker">
     <div class="element-container main-menu-area">
-      <div class="bg-body" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.08)">
+      <div class="bg-body">
         <div class="row no-gutters d-flex align-items-center">
           <div class="menu-left position-static min-height-none" style="width: 95%">
             <div class="ne-main-menu">

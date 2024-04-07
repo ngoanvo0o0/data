@@ -3,26 +3,22 @@ import type { NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
   news: NewsDto
-  isCenter?: boolean
 }>()
 
 </script>
 
 <template>
   <NuxtLink :to="`bai-viet/${news.slug}`" class="top-story-item img-overlay-70 mb-4 position-relative d-block">
-    <nuxt-img :src="news.imageUrl || ' '" :alt="news.title" format="webp" class="img-fluid w-100 h-100" />
+    <nuxt-img :src="news.imageUrl || ' '" :alt="news.title" format="webp" class="img-fluid w-100 h-100" style="object-fit: cover;"/>
     <div class="top-story-content">
-      <div class="box-category">
-        <SharedBoxCategory :category="news.categoryName" :slug="news?.categoryName"/>
-      </div>
       <div class="mask-content-lg">
-        <h1 class="title-medium-light" v-if="news.isOutStanding">
-          <a :href="`bai-viet/${news.slug}`">{{news.title}}</a>
-        </h1>
-        <h3 class="title" :class="[isCenter ? 'title-center' : 'title-side']" v-else>
-          <a :href="`bai-viet/${news.slug}`" class="elipsis-3-lines">{{news.title}}</a>
+        <div class="box-category">
+          <SharedBoxCategory :category="news.categoryName" :slug="news?.categoryName"/>
+        </div>
+        <h3 class="title" style="margin-bottom: 5px;">
+          <a :href="`bai-viet/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
         </h3>
-        <div v-if="isCenter" class="post-date-light" style="display: flex; align-items: center;">
+        <div class="post-date-light" style="display: flex; align-items: center;">
           <SharedNewsAuthor
               :author="news.author"
               :publishDate="news.publishDate"
@@ -45,8 +41,11 @@ const props = defineProps<{
   padding: 0 30px;
 }
 .box-category {
-  position: absolute;
+  position: unset;
   top: 0;
+}
+.box-category>div {
+  margin-bottom: 10px;
 }
 .news2-view {
   display: flex;
@@ -66,6 +65,8 @@ const props = defineProps<{
   -moz-transition: all 0.9s ease;
   -ms-transition: all 0.9s ease;
   text-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  font-size: 22px;
+  line-height: 26px;
 }
 .title-center a {
   font-size: 30px;

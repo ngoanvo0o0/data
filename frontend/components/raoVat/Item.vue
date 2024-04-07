@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { type NewsDto } from "~/models/news.model";
 
-
 withDefaults(defineProps<{
-  news: NewsDto
+  news: NewsDto,
   isRaoVat?: boolean
 }>(), {
   isRaoVat: true

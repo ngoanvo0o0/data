@@ -5,7 +5,7 @@
         <HeaderTop />
         <div class="" id="sticker">
           <div class="element-container main-menu-area">
-            <div class="bg-body" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.08)">
+            <div class="bg-body">
               <div class="row no-gutters d-flex align-items-center">
                 <div class="menu-left position-static min-height-none" style="width: 95%">
                   <div class="ne-main-menu">
@@ -43,7 +43,7 @@
                           </ul>
                         </li>
                         <li>
-                          <router-link to="/rao-vat" active-class="active">
+                          <router-link to="/rao-vat" active-class="active" class="menu-item">
                             <span style="margin-right: 5px;">Rao vặt</span>
                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                           </router-link>
@@ -159,10 +159,15 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
 <style lang="scss">
 
 .wrapper #sticker {
-  background-color: #d72924;
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.08);
+  border: 1px solid #ddd;
 }
 .wrapper.not-home-page #sticker {
-  background-color: rgb(240, 241, 244);;
+  background-color: transparent;
+}
+.wrapper.not-home-page #sticker {
+  border: 0;
 }
 
 .not-home-page .header {
@@ -175,17 +180,18 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
 
   a:has(+ .ne-dropdown-menu .active):hover,
   .active:hover {
-    color: black !important;
-    background-color: #d72924
+    color: white !important;
+    background-color: black !important; 
   }
 
   .main-menu-area .bg-body {
     background-color: white
   }
 
-  .main-menu-area .ne-main-menu nav ul li a:hover {
+  .main-menu-area .ne-main-menu nav ul li a:hover,
+  .main-menu-area .ne-main-menu nav ul li a.active:hover {
     color: white;
-    background-color: #d72924;
+    background-color: black;
   }
 }
 
@@ -201,12 +207,12 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   } */
 
   .main-menu-area .bg-body {
-    background-color: #d72924
+    background-color: white
   }
 
-  .main-menu-area .ne-main-menu nav ul li:hover a {
-    color: #d72924;
-    background-color: white;
+  .main-menu-area .ne-main-menu nav ul li:hover>.menu-item {
+    color: #d72924 !important;
+    background-color: black !important;
   }
 
   .main-menu-area .ne-main-menu nav ul li a:hover {
@@ -232,6 +238,21 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
     color: black;
   }
 }
+.header-action-item {
+  position: relative;
+}
+.header-action-item::after {
+  content: "";
+  width: 1px;
+  height: 20px;
+  top: 50%;
+  left: 0;
+  background-color: #232323;
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 
 .header-action-item input {
   display: none;
@@ -240,18 +261,18 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
 }
 .header-action-item ul li .fa-search {
   font-size: 25px !important;
-  color: white !important;
+  color: #232323 !important;
 }
-.not-home-page .header-action-item .search-icon {
+/* .not-home-page .header-action-item .search-icon {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
   background-color: #d72924 !important;
-}
+} */
 .not-home-page .header-action-item ul li .fa-search {
   font-size: 25px !important;
-  color: white !important;
+  color: #232323 !important;
 }
 .header .menu {
   display: block
@@ -266,21 +287,20 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   .header .top-bar-bottom {
     display: none;
   }
-  /* .header .on-mobile-fixed ul {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center
-  } */
+
+  .header-action-item::after {
+    display: none;
+  }
 
   .header-action-item ul li .fa-search {
-  font-size: 25px !important;
-  color: #232323 !important;
-}
+    font-size: 25px !important;
+    color: #232323 !important;
+  }
+
+  .header-action-item {
+    position: fixed;
+    top: 15px
+  }
 }
 
 @media screen and (max-width:576px) {

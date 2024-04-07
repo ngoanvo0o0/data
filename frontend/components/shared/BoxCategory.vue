@@ -15,7 +15,7 @@ const props = defineProps<{
   font-size: 12px;
   font-weight: 600;
   line-height: 18px;
-  padding: 4px 12px;
+  padding: 2px 10px;
   width: fit-content;
   letter-spacing: 0.55px;
 }
