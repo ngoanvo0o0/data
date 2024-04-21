@@ -110,7 +110,7 @@ onMounted(() => {
                   quality="80"
                   format="webp"
                   style="width: 100%; height: 100px; object-fit: cover"
-                  src="/img/banner/header-banner.png"
+                  src="/img/banner/header-banner.jpg"
                   alt="ad"
                   class="img-fluid"
                 />

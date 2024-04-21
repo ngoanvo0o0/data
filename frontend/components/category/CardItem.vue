@@ -112,7 +112,7 @@ withDefaults(defineProps<Props>(), {
   align-items: center;
   gap: 10px;
   flex-direction: row;
-  color: #ffff80;
+  color: #d72924;
   font-weight: 600;
   font-size: 16px;
 }

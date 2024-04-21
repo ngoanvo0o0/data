@@ -1441,7 +1441,7 @@ ul.item2-inline li:last-child {
 
 .title-bar-left:before {
   content: "";
-  background-color: #e53935;
+  background-color: #ffff80;
   height: 2px;
   width: 45px;
   position: absolute;
@@ -4037,7 +4037,7 @@ div#wrapper.open > .offcanvas-mask {
 /* .main-menu-area .ne-main-menu nav ul li ul.ne-dropdown-menu>li a:focus, */
 .main-menu-area .ne-main-menu nav ul li ul.ne-dropdown-menu > li a:hover {
   color: white !important;
-  background-color: #e53935;
+  background-color: #000;
 }
 
 .main-menu-area .ne-main-menu nav ul li ul.ne-dropdown-menu > li:last-child {
