@@ -2,7 +2,9 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 // const apiURL = process.env.BACKEND_URL || 'http://localhost:8000';
-const apiURL = 'https://api.nguoivietplus.com'
+const apiURL = 'https://api.giaitrinews.net'
+// const apiURL = 'https://api.tinviettoday.com'
+// const apiURL = "http://localhost:8000"
 export default defineNuxtConfig({
   css: [
     "@/assets/css/bootstrap.min.css",
@@ -28,7 +30,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "TAP News",
+      title: "Giải Trí News",
       htmlAttrs: {
         lang: "vn",
       },
@@ -104,7 +106,7 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@nuxt/image", '@nuxtjs/sitemap', "nuxt-simple-robots", "nuxt-schema-org"],
   schemaOrg: {
     meta: {
-      host: 'https://nguoivietplus.com'
+      host: 'https://giaitrinews.net'
     }
   },
   robots: {

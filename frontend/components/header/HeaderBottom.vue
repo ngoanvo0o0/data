@@ -9,7 +9,7 @@
                 <ul>
                   <li class="logo-area">
                     <router-link to="/" class="img-fluid">
-                      <nuxt-img style="height: 50px;" src="/img/logotapnews.png" alt="Người Việt Plus logo" />
+                      <nuxt-img style="height: 100px;" src="/img/logo_giaitrinews.png" alt="Giải Trí News logo" />
                     </router-link>
                   </li>
                   <li>
@@ -37,7 +37,7 @@
                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                       </span>
                     </router-link>
-                    <ul class="ne-dropdown-menu" v-if="menuGroupThree.length"
+                    <ul class="ne-dropdown-menu" v-if="menuGroupThree.slength"
                       style="max-height: 300px;overflow: hidden auto">
                       <li v-for="child in menuGroupThree">
                         <router-link :to="`/${child.slug}`" active-class="active">{{ child.name }}</router-link>
@@ -184,22 +184,22 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   a:has(+ .ne-dropdown-menu .active),
   .active {
     color: black !important;
-    background-color: #d72924
+    background-color: #fff;
   }
 
   a:has(+ .ne-dropdown-menu .active):hover,
   .active:hover {
-    color: black !important;
-    background-color: #d72924
+    color: white !important;
+    background-color: #0069ff !important;
   }
 
   .main-menu-area .bg-body {
-    background-color: white
+    background-color: #0069ff;
   }
 
   .main-menu-area .ne-main-menu nav ul li a:hover {
-    color: white;
-    background-color: #d72924;
+    color: #000;
+    background-color: #0069ff;
   }
 }
 
@@ -213,18 +213,14 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
     margin: 0 auto;
   }
 
-  .main-menu-area .bg-body {
-    background-color: white
-  }
-
   .main-menu-area .ne-main-menu nav ul li:hover a {
-    color: #d72924;
-    background-color: white;
+    color: #fff;
+    background-color: #0069ff;
   }
 
   .main-menu-area .ne-main-menu nav ul li a:hover {
-    color: #d72924;
-    background-color: black;
+    color: #000;
+    background-color: white;
   }
 
   .main-menu-area .ne-main-menu nav ul li.logo-area a:hover {
@@ -233,7 +229,8 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   }
 
   .main-menu-area .ne-main-menu nav ul li a {
-    color: black;
+    color: white;
+    background-color: #0069ff;
     display: block;
     font-family: Roboto, sans-serif !important;
     font-size: 14px;

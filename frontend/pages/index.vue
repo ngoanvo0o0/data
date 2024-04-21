@@ -43,9 +43,9 @@ const lifeAndHealthPostList = computed(() => (lifePostList.value?.items || []).c
 const cultureAndEntertainmentPostList = computed(() => (culturalPostList.value?.items || []).concat(entertainmentPostList.value?.items || []))
 const travelAndFoodPostList = computed(() => (travelPostList.value?.items || []).concat(foodPostList.value?.items || []))
 
-const descriptionMetaTag = ref('Nguoivietplus là trang báo điện tử cung cấp bài viết, hình ảnh, video về con người và cộng đồng người Việt trên thế giới và các tin tức quốc tế, phóng sự toàn cầu.')
+const descriptionMetaTag = ref('GiaiTriNews là trang báo điện tử cung cấp bài viết, hình ảnh, video về con người và cộng đồng người Việt trên thế giới và các tin tức quốc tế, phóng sự toàn cầu.')
 useSeoMeta({
-  keywords: 'Nguoi viet plus',
+  keywords: 'Giải Trí News',
   description: descriptionMetaTag.value,
   ogDescription: descriptionMetaTag.value
 }, {

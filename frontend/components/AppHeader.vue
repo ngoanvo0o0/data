@@ -159,7 +159,7 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
 <style lang="scss">
 
 .wrapper #sticker {
-  background-color: #d72924;
+  background-color: #0069ff;
 }
 .wrapper.not-home-page #sticker {
   background-color: rgb(240, 241, 244);;
@@ -170,22 +170,43 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   a:has(+ .ne-dropdown-menu .active),
   .active {
     color: black !important;
-    background-color: #d72924
+    background-color: #0069ff;
   }
 
   a:has(+ .ne-dropdown-menu .active):hover,
   .active:hover {
     color: black !important;
-    background-color: #d72924
+    background-color: #fff;
   }
 
-  .main-menu-area .bg-body {
-    background-color: white
-  }
+  .main-menu-area {
+    .bg-body {
+      background-color: #0069ff;
+    }
+    .ne-main-menu {
+      nav {
+        ul li {
+          a:hover {
+            color: #000;
+            background-color: #fff;
+          }
+          a.active {
+            background-color: #fff;
+          }
+        }
+      }
 
-  .main-menu-area .ne-main-menu nav ul li a:hover {
-    color: white;
-    background-color: #d72924;
+      ul.ne-dropdown-menu {
+        li {
+          a.active {
+            background-color: #fff;
+          }
+          a:hover {
+            background-color: #0069ff;
+          }
+        } 
+      }
+    }
   }
 }
 
@@ -201,21 +222,22 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   } */
 
   .main-menu-area .bg-body {
-    background-color: #d72924
+    background-color: #0069ff;
   }
 
   .main-menu-area .ne-main-menu nav ul li:hover a {
-    color: #d72924;
+    color: #000;
     background-color: white;
   }
 
   .main-menu-area .ne-main-menu nav ul li a:hover {
-    color: #d72924;
-    background-color: black;
+    color: #000;
+    background-color: white;
   }
 
   .main-menu-area .ne-main-menu nav ul li a {
-    color: black;
+    color: white;
+    background-color: #0069ff;
     display: block;
     font-family: Roboto, sans-serif !important;
     font-size: 14px;
@@ -227,10 +249,15 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
     -o-transition: all .3s ease-out;
     transition: all .3s ease-out
   }
+}
 
-  .main-menu-area .ne-main-menu nav ul li .ne-dropdown-menu a {
-    color: black;
+.main-menu-area .ne-main-menu nav ul li ul.ne-dropdown-menu {
+  > li {
+    a:hover {
+      background-color: #0069ff;
+    }
   }
+  color: black;
 }
 
 .header-action-item input {
@@ -247,11 +274,11 @@ const [menus, raoVatCategories] = await Promise.all([getMenus(), getRaoVatCatego
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: #d72924 !important;
+  background-color: #0069ff !important;
 }
 .not-home-page .header-action-item ul li .fa-search {
   font-size: 25px !important;
-  color: white !important;
+  color: #fff !important;
 }
 .header .menu {
   display: block

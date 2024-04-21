@@ -11,7 +11,7 @@
 
 	const config = useRuntimeConfig();
 	const url = config.public.apiURL;
-	const credentials = reactive({email: '', password: ''});
+	const credentials = reactive({email: '', password: '', isRememberMe: false});
 	const validationRules = computed(() => {
 		return {
 			email: {

@@ -28,7 +28,7 @@ onMounted(() => {
     <div class="top-bar-top" style="background-color: #2c2c2c">
       <div class="element-container">
         <div class="" style="display: flex; justify-content: space-between">
-          <div style="background-color: #d72924;padding-right: 20px;padding-left: 20px;display: flex;align-items:center">
+          <div style="background-color: #0069ff;padding-right: 20px;padding-left: 20px;display: flex;align-items:center">
             <ul class="news-info-list">
               <li>
                 <i class="fa fa-calendar" aria-hidden="true"></i>{{ moment().format('DD-MM-YYYY') }}
@@ -70,14 +70,14 @@ onMounted(() => {
             <div class="col-lg-4">
               <div class="logo-area">
                 <a href="/" class="img-fluid">
-                  <nuxt-img style="height: 50px;" src="/img/logotapnews.png" alt="Người Việt Plus logo" />
+                  <nuxt-img style="height: 100px;" src="/img/logo_giaitrinews.png" alt="Giải Trí News logo" />
                 </a>
               </div>
             </div>
             <div class="col-lg-8 col-md-12">
               <div class="">
                 <nuxt-img quality="80" format="webp" style="width: 100%;height: 100px;object-fit: cover;"
-                  src="/img/banner/header-banner.png" alt="ad" class="img-fluid" />
+                  src="/img/banner/empty-banner.png" alt="ad" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ onMounted(() => {
 .header-top-bar {
   .top-bar-top {
     .sign-in {
-      color: #d72924;
+      color: white;
     }
   
     .news-info-list {
@@ -127,11 +127,11 @@ onMounted(() => {
         font-weight: 400;
 
         &.logout {
-            color: #e53935;
+            color: #fff;
         }
 
         &:hover {
-            background-color: #e53935;
+            background-color: #0069ff;
             color: #fff;
         }
     }

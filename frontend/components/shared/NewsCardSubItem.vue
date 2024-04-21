@@ -9,7 +9,7 @@ const props = defineProps<{
 
 <template>
   <div class="raovat-item media bg-body item-shadow-gray" style="margin: 20px 0;">
-    <a class="rao-vat-img img-opacity-hover" :href="`/rao-vat/${news.slug}`">
+    <a class="rao-vat-img img-opacity-hover" :href="`/bai-viet/${news.slug}`">
       <nuxt-img  :src="news.imageUrl || ' '" format="webp" :alt="news.title" class="rao-vat-img w-full h-full" />
     </a>
     <div class="media-body">
@@ -22,7 +22,7 @@ const props = defineProps<{
         </div>
       </div>
       <h3 class="raovat-title" style="margin-bottom: 15px; margin-top: 10px;">
-        <a :href="`/rao-vat/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
+        <a :href="`/bai-viet/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
       </h3>
     </div>
   </div>

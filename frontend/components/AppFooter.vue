@@ -9,12 +9,16 @@
               <div class="row">
                 <div class="col-12">
                   <a href="/" class="footer-logo img-fluid">
-                    <nuxt-img style="height: 70px;" src="/img/logotapnews.png" alt="Người Việt Plus logo"
+                    <nuxt-img style="height: 70px;" src="/img/logo_giaitrinews.png" alt="Giải Trí News logo"
                       class="img-fluid" />
                   </a>
                 </div>
                 <div class="col-12 mt-5 text-white">
-                  <p>Address: 5201 S Torrey Pines Dr. , # 1246 Las Vegas, NV 89118</p>
+                  <p>Đơn vị chủ quản: Công ty TNHH Tư vấn Truyền thông Đại Thế Giới</p>
+                  <p>Chịu trách nhiệm nội dung: Lý Mỹ Tiên</p>
+                  <p>Add: A12A.08, Tầng 12A, Block A thuộc Khu cao ốc văn phòng và Căn hộ chung cư 5B đường Phổ Quang, Phường 2, Quận Tân Bình, Thành Phố Hồ Chí Minh, Việt Nam</p>
+                  <p>Tel: 028.62.701.030</p>
+                  <p>Email: megaworldcons@gmail.com </p>
                 </div>
 
                 <div class="col-12">
@@ -78,7 +82,7 @@
         <div class="element-container">
           <div class="row">
             <div class="col-8">
-              <p class="m-0 text-white">Copyright © 2015-23 Người Việt plus.</p>
+              <p class="m-0 text-white">Copyright © 2015-24 Giải trí News</p>
             </div>
             <div class="page-links col-4 d-flex justify-content-end gap-4">
               <a class="text-white" href="/">Trang Chủ</a>
@@ -114,6 +118,6 @@ const { data: config } = await useFetch<any>
 }
 
 .page-links>a:hover {
-  color: #e53935;
+  color: #0069ff;
 }
 </style>

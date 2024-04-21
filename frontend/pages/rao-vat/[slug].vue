@@ -49,7 +49,7 @@ useSeoMeta({
 
 useSchemaOrg([
   defineWebSite({
-    name: "Nguoi viet plus"
+    name: "Giải Trí News"
   }),
   defineWebPage(),
   defineArticle({

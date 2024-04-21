@@ -1,11 +1,13 @@
 module.exports = {
     apps: [{
-      name: "Front-End",
+      name: "GiaiTriNews_FE",
       instances: 1,
       autorestart: true,
-      script: ".output/server/index.mjs",
+      script: "npm",
+      args: "run listen",
       env: {
         PORT: '8080',
       },
+      watch: false
     }]
-  }
+}
