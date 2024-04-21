@@ -2,30 +2,46 @@
 import type { NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
-  news: NewsDto
-}>()
-
+  news: NewsDto;
+}>();
 </script>
 
 <template>
-  <NuxtLink :to="`bai-viet/${news.slug}`" class="top-story-item img-overlay-70 mb-4 position-relative d-block">
-    <nuxt-img :src="news.imageUrl || ' '" :alt="news.title" format="webp" class="img-fluid w-100 h-100" style="object-fit: cover;"/>
+  <NuxtLink
+    :to="`bai-viet/${news.slug}`"
+    class="top-story-item img-overlay-70 mb-4 position-relative d-block"
+  >
+    <nuxt-img
+      :src="news.imageUrl || ' '"
+      :alt="news.title"
+      format="webp"
+      class="img-fluid w-100 h-100"
+      style="object-fit: cover"
+    />
     <div class="top-story-content">
       <div class="mask-content-lg">
         <div class="box-category">
-          <SharedBoxCategory :category="news.categoryName" :slug="news?.categoryName"/>
-        </div>
-        <h3 class="title" style="margin-bottom: 5px;">
-          <a :href="`bai-viet/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
-        </h3>
-        <div class="post-date-light" style="display: flex; align-items: center;">
-          <SharedNewsAuthor
-              :author="news.author"
-              :publishDate="news.publishDate"
+          <SharedBoxCategory
+            :category="news.categoryName"
+            :slug="news?.categoryName"
           />
-          <div class="news2-view" style="margin-bottom: 12px;margin-left: 10px;">
+        </div>
+        <h3 class="title" style="margin-bottom: 5px">
+          <a :href="`bai-viet/${news.slug}`" class="elipsis-2-lines">{{
+            news.title
+          }}</a>
+        </h3>
+        <div class="post-date-light" style="display: flex; align-items: center">
+          <SharedNewsAuthor
+            :author="news.author"
+            :publishDate="news.publishDate"
+          />
+          <div
+            class="news2-view"
+            style="margin-bottom: 12px; margin-left: 10px"
+          >
             <i class="fa fa-eye"></i>
-            <p style="margin: 0;">{{ news.view }}</p>
+            <p style="margin: 0">{{ news.view }}</p>
           </div>
         </div>
       </div>
@@ -44,7 +60,7 @@ const props = defineProps<{
   position: unset;
   top: 0;
 }
-.box-category>div {
+.box-category > div {
   margin-bottom: 10px;
 }
 .news2-view {
@@ -52,7 +68,7 @@ const props = defineProps<{
   align-items: center;
   gap: 10px;
   flex-direction: row;
-  color: #d72924;
+  color: #fff;
   font-weight: 700;
   font-size: 16px;
 }
@@ -64,7 +80,7 @@ const props = defineProps<{
   -webkit-transition: all 0.9s ease;
   -moz-transition: all 0.9s ease;
   -ms-transition: all 0.9s ease;
-  text-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
   font-size: 22px;
   line-height: 26px;
 }
@@ -81,7 +97,7 @@ const props = defineProps<{
   opacity: 1;
 }
 .top-story-item:after {
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
   position: absolute;
   display: block;
   width: 100%;

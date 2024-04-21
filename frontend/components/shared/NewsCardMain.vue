@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {type NewsDto} from "~/models/news.model";
+import { type NewsDto } from "~/models/news.model";
 
 interface Props {
-    news: NewsDto, 
-    isShowAuthor: boolean
+  news: NewsDto;
+  isShowAuthor: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
-    isShowAuthor: true
-})
+  isShowAuthor: true,
+});
 </script>
 
 <template>
@@ -16,7 +16,14 @@ withDefaults(defineProps<Props>(), {
     <div class="news-card-main mb-30">
       <div class="gradient-overlay"></div>
       <div class="image-area">
-        <nuxt-img  :src="news.imageUrl || ' '" format="webp" height="500" :alt="news.title" class="img-fluid w-100 h-100" style="object-fit: cover;"/>
+        <nuxt-img
+          :src="news.imageUrl || ' '"
+          format="webp"
+          height="500"
+          :alt="news.title"
+          class="img-fluid w-100 h-100"
+          style="object-fit: cover"
+        />
       </div>
       <div class="new-content">
         <div class="news-title">
@@ -66,7 +73,7 @@ withDefaults(defineProps<Props>(), {
   transition: all 0.9s ease;
   -o-transition: all 0.9s ease;
   -webkit-transition: all 0.9s ease;
-  text-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 .news-card-main .news2-info {
   display: flex;
@@ -88,7 +95,7 @@ withDefaults(defineProps<Props>(), {
   align-items: center;
   gap: 10px;
   flex-direction: row;
-  color: #d72924;
+  color: #fff;
   font-weight: 700;
   font-size: 16px;
 }
@@ -96,7 +103,7 @@ withDefaults(defineProps<Props>(), {
   opacity: 1;
 }
 .news-card-main:after {
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
   position: absolute;
   display: block;
   width: 100%;

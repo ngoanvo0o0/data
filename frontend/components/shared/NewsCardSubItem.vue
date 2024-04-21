@@ -2,15 +2,22 @@
 import { type NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
-  news: NewsDto
-}>()
-
+  news: NewsDto;
+}>();
 </script>
 
 <template>
-  <div class="raovat-item media bg-body item-shadow-gray" style="margin: 20px 0;">
+  <div
+    class="raovat-item media bg-body item-shadow-gray"
+    style="margin: 20px 0"
+  >
     <a class="rao-vat-img img-opacity-hover" :href="`/rao-vat/${news.slug}`">
-      <nuxt-img  :src="news.imageUrl || ' '" format="webp" :alt="news.title" class="rao-vat-img w-full h-full" />
+      <nuxt-img
+        :src="news.imageUrl || ' '"
+        format="webp"
+        :alt="news.title"
+        class="rao-vat-img w-full h-full"
+      />
     </a>
     <div class="media-body">
       <div class="time">
@@ -21,8 +28,10 @@ const props = defineProps<{
           />
         </div>
       </div>
-      <h3 class="raovat-title" style="margin-bottom: 15px; margin-top: 10px;">
-        <a :href="`/rao-vat/${news.slug}`" class="elipsis-2-lines">{{news.title}}</a>
+      <h3 class="raovat-title" style="margin-bottom: 15px; margin-top: 10px">
+        <a :href="`/rao-vat/${news.slug}`" class="elipsis-2-lines">{{
+          news.title
+        }}</a>
       </h3>
     </div>
   </div>
@@ -39,7 +48,7 @@ const props = defineProps<{
   transition: all 0.5s ease-out;
 }
 .raovat-item .raovat-title:hover a {
-  color: #d72924 !important
+  color: #d72924 !important;
 }
 .raovat-item .time .post-date-light ul li {
   color: #5c5c5c;

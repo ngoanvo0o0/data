@@ -1,16 +1,31 @@
 <template>
   <div class="cus-breadcrumb category-header" :class="small ? 'small' : ''">
-    <ul class="news-breadcrumb" style="display: flex;gap: 10px;flex-wrap: wrap;">
+    <ul
+      class="news-breadcrumb"
+      style="display: flex; gap: 10px; flex-wrap: wrap"
+    >
       <template v-if="breadcrumbs && breadcrumbs.length">
-        <li class="news-breadcrumb-item" v-for="(breadcrumb, breadcrumbIndex) in breadcrumbs" :key="breadcrumbIndex">
+        <li
+          class="news-breadcrumb-item"
+          v-for="(breadcrumb, breadcrumbIndex) in breadcrumbs"
+          :key="breadcrumbIndex"
+        >
           <template v-if="breadcrumbIndex === breadcrumbs.length - 1">
-            <span class="news-breadcrumb-title last" style="margin-right:10px">{{ breadcrumb.title }}</span>
+            <span
+              class="news-breadcrumb-title last"
+              style="margin-right: 10px"
+              >{{ breadcrumb.title }}</span
+            >
           </template>
           <template v-else>
-            <span class="news-breadcrumb-title news-breadcrumb-url" :class="{
-              'max-w-100': breadcrumbIndex === 1,
-              'red': small
-            }" style="margin-right:10px">
+            <span
+              class="news-breadcrumb-title news-breadcrumb-url"
+              :class="{
+                'max-w-100': breadcrumbIndex === 1,
+                red: small,
+              }"
+              style="margin-right: 10px"
+            >
               {{ breadcrumb.title }}
             </span>
           </template>
@@ -20,13 +35,26 @@
         </li>
       </template>
     </ul>
-    <div v-if="category" class="category-name" style="text-transform: capitalize;">
-      <h2 style="margin-bottom: 0;">Category: </h2>
-      <h2 style="margin-bottom: 0;text-transform: capitalize">{{ category }}</h2>
+    <div
+      v-if="category"
+      class="category-name"
+      style="text-transform: capitalize"
+    >
+      <h2 style="margin-bottom: 0">Category:</h2>
+      <h2 style="margin-bottom: 0; text-transform: capitalize">
+        {{ category }}
+      </h2>
     </div>
     <div v-if="tabs.length > 0" class="tag-area">
-      <button v-for="tab in tabs" :key="tab.slug" class="item" :class="tab.slug === query.categorySlug && 'active'"
-        @click="handleClick(tab)">{{ tab.name }}</button>
+      <button
+        v-for="tab in tabs"
+        :key="tab.slug"
+        class="item"
+        :class="tab.slug === query.categorySlug && 'active'"
+        @click="handleClick(tab)"
+      >
+        {{ tab.name }}
+      </button>
     </div>
   </div>
 </template>
@@ -34,38 +62,37 @@
 <script setup lang="ts">
 import { useRoute } from "nuxt/app";
 
-const emit = defineEmits(['onTabClick'])
+const emit = defineEmits(["onTabClick"]);
 const $route = useRoute();
 const query = $route.query;
 
 interface IBreadcrumbItem {
-  title: string
-  utl: string
+  title: string;
+  utl: string;
 }
 interface ICategory {
-  slug: string,
-  name: string
+  slug: string;
+  name: string;
 }
 interface Props {
-  breadcrumbs: IBreadcrumbItem[],
-  steps?: Number,
-  category?: string,
-  small?: boolean,
-  showTabs?: boolean,
-  tabs?: ICategory[]
+  breadcrumbs: IBreadcrumbItem[];
+  steps?: Number;
+  category?: string;
+  small?: boolean;
+  showTabs?: boolean;
+  tabs?: ICategory[];
 }
 withDefaults(defineProps<Props>(), {
   breadcrumbs: [],
   steps: 2,
   small: false,
   showTabs: false,
-  tabs: []
-})
+  tabs: [],
+});
 
 const handleClick = (tab: ICategory) => {
-  emit('onTabClick', tab)
-}
-
+  emit("onTabClick", tab);
+};
 </script>
 
 <style>
@@ -73,8 +100,8 @@ const handleClick = (tab: ICategory) => {
   position: relative;
   padding: 30px;
   background: #fff;
-  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .08);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .08);
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.08);
 }
 
 .category-header.small {
@@ -82,11 +109,11 @@ const handleClick = (tab: ICategory) => {
 }
 
 .category-header.small .news-breadcrumb-title.last {
-  color: red
+  color: red;
 }
 
 .news-breadcrumb {
-  color: #A9A9AA;
+  color: #a9a9aa;
   font-size: 13px;
   display: flex;
   align-items: center;
@@ -94,12 +121,12 @@ const handleClick = (tab: ICategory) => {
 }
 
 .news-breadcrumb-title {
-  color: #A9A9AA;
-  text-transform: capitalize
+  color: #a9a9aa;
+  text-transform: capitalize;
 }
 
 .news-breadcrumb-item:hover .news-breadcrumb-link.news-breadcrumb-url {
-  color: #A9A9AA !important;
+  color: #a9a9aa !important;
   text-decoration: underline;
 }
 
@@ -107,7 +134,7 @@ const handleClick = (tab: ICategory) => {
   margin-top: 15px;
   display: flex;
   gap: 5px;
-  align-items: center
+  align-items: center;
 }
 
 .cus-breadcrumb .tag-area {
@@ -137,7 +164,7 @@ const handleClick = (tab: ICategory) => {
   border: 1px solid #d72924;
 }
 
-@media only screen and (max-width:991.9px) {
+@media only screen and (max-width: 991.9px) {
   .category-header {
     padding: 15px;
   }

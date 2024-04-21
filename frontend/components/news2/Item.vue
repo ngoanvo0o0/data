@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {type NewsDto} from "~/models/news.model";
+import { type NewsDto } from "~/models/news.model";
 
 const props = defineProps<{
-  news: NewsDto
-}>()
+  news: NewsDto;
+}>();
 </script>
 
 <template>
@@ -11,7 +11,14 @@ const props = defineProps<{
     <div class="news2-main-item mb-30">
       <div class="gradient-overlay"></div>
       <div class="image-area">
-        <nuxt-img :src="news.imageUrl || ' '" format="webp" height="500" :alt="news.title" class="img-fluid w-100 h-100" style="object-fit: cover;"/>
+        <nuxt-img
+          :src="news.imageUrl || ' '"
+          format="webp"
+          height="500"
+          :alt="news.title"
+          class="img-fluid w-100 h-100"
+          style="object-fit: cover"
+        />
       </div>
       <div class="new-content">
         <div class="news-title">
@@ -61,7 +68,7 @@ const props = defineProps<{
   transition: all 0.9s ease;
   -o-transition: all 0.9s ease;
   -webkit-transition: all 0.9s ease;
-  text-shadow: 1px 1px 3px rgba(0,0,0,.4);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 .news2-main-item .news2-info {
   display: flex;
@@ -83,7 +90,7 @@ const props = defineProps<{
   align-items: center;
   gap: 10px;
   flex-direction: row;
-  color: #d72924;
+  color: #ffff80;
   font-weight: 700;
   font-size: 16px;
 }
@@ -91,7 +98,7 @@ const props = defineProps<{
   opacity: 1;
 }
 .news2-main-item:after {
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
   position: absolute;
   display: block;
   width: 100%;
